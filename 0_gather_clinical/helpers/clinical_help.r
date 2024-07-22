@@ -14,6 +14,6 @@ responder <- function(v){
   if( "CR" %in% v || "PR" %in% v ){ 1 }
   else{ 0 }
 }
-trt_indicator <- function( v ){
-    apply(data.frame(lapply( v, function(i) grepl(i, base$treatment))), 1, sum)
+trt_indicator <- function (v, t) {
+  apply(data.frame(lapply(v, function(i) grepl(i, t))), 1, sum)
 }

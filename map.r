@@ -2,6 +2,7 @@ I_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/"
 O_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/"
 TMP_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/tmp/"
 READY_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ready/"
+SHARE_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/share/"
 REF_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ref/"
 
 ### File path mapper for samples
