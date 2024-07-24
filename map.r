@@ -4,6 +4,7 @@ TMP_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/tmp/"
 READY_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ready/"
 SHARE_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/share/"
 REF_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ref/"
+INST_DIR="/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/deconvolution_output_merged/"
 
 ### File path mapper for samples
 get_fp <- function(i, type = "purity"){
