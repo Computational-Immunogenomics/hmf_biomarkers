@@ -1,11 +1,12 @@
 I_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/"
 O_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/"
-TMP_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/tmp/"
+TMP_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/database/"
 READY_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ready/"
 SHARE_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/share/"
 REF_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ref/"
 INST_DIR="/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/deconvolution_output_merged/"
 UTIL_DIR="/mnt/bioinfnas/immunocomp/jusset/biomarkers/util/tmp/" 
+HELP_DIR="/mnt/bioinfnas2/immunocomp/jusset/biomarkers/helpers/"
 
 ### File path mapper for samples
 get_fp <- function(i, type = "purity"){
@@ -18,6 +19,7 @@ get_fp <- function(i, type = "purity"){
   else if (type == "teal"){ as.character(paste0(I_DIR, 'teal/', i, ".teal.tellength.tsv")) }
   else if (type == "neo"){ as.character(paste0(I_DIR, 'neo/data_neo/', i, "/", i, ".neo.neoepitope.tsv.gz")) }
   else if (type == "neo_pep"){ as.character(paste0(I_DIR, 'neo/data_neo/', i,"/", i, ".neo.peptide_scores.tsv.gz")) }
+  else if (type == "viral"){ as.character(paste0(I_DIR, "/viral_integration/data/datasets/", i, "/virus_interpreter/", i, ".virus.annotated.tsv"))}
 }
 reader <- function( i_file = "file_path", sample = "ACTN01020001T"){
     fread( i_file ) %>% mutate(sampleId = sample) 
