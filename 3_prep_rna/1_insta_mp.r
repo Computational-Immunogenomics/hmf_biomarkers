@@ -1,10 +1,5 @@
-options(repr.matrix.max.cols=50, repr.matrix.max.rows=100)
-library(tidyverse)
-library(data.table)
-
-getwd()
-
 source(paste0(dirname(getwd()),'/map.r'))
+source(paste0(HELP_DIR, "shortcuts.r"))
 
 wd <- "/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/deconvolution_output_merged/"
 zscores <- "/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/3_zscores_by_cellType/zscore_df.csv"

@@ -5,6 +5,8 @@ drivers <- fread( paste0(TMP_DIR, "drivers.csv"))
 
 drivers_ready <- 
 drivers %>% 
+  mu(likelihood = ifelse(category == "TSG" & likelihoodMethod == "DISRUPTION", 1, likelihoodMethod)) %>% 
+  fi(likelihood > 1) %>%
   transmute(sampleId, gene = paste0("driver_", gene)) %>% 
   unique() %>% 
   mutate(driver = 1) %>% 

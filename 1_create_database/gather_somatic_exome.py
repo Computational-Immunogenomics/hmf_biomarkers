@@ -21,15 +21,9 @@ sys.path.insert(0, f'{os.path.dirname(os.getcwd())}')
 # In[3]:
 
 
-from map import I_DIR
-SOMATIC_DIR = I_DIR + 'somatics/'
-O_DIR = I_DIR + 'biomarkers/database/'
-
-
-# In[4]:
-
-
-#canonical = pd.read_csv("/mnt/bioinfnas2/immunocomp/anadueso/tools_hmf/DATA/public_resources/hmf_dna_pipeline_resources.38_v5.32/common/ensembl_data/ensembl_trans_exon_data.csv")
+from map import I_DIR, SOMATIC_DIR, O_DIR
+#SOMATIC_DIR = I_DIR + 'somatics/'
+#O_DIR = I_DIR + 'biomarkers/database/'
 
 
 # ### Helper Functions 
@@ -167,12 +161,4 @@ for i in run_files:
     if k == len(run_files):
         j = j + 1
         pd.concat(dfs).to_csv(O_DIR + 'somatic_exome/somatic_exome_chunk_' + str(j) + '.csv', index = False)    
-
-
-# ### Save Output
-
-# In[10]:
-
-
-#pd.concat(dfs).to_csv(O_DIR + 'somatic_exome_big.csv', index = False)
 

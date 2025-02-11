@@ -6,10 +6,6 @@ library(InstaPrism)
 source(paste0(dirname(getwd()),'/map.r'))
 gene_sets <- readRDS(paste0(REF_DIR, 'gene_sets_full.Rds'))
 
-REF_DIR
-
-names(gene_sets)
-
 setwd(INST_DIR)
 
 hires <- list()

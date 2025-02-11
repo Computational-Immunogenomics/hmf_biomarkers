@@ -3,7 +3,6 @@ source(paste0(HELP_DIR, "shortcuts.r"))
 
 print("Collect Purities")
 
-SOM_DIR <- paste0(I_DIR, "somatics/")
 patients <- list.files(SOM_DIR)
 
 tmp <- list()
@@ -30,10 +29,6 @@ for( i in patients){
 
 fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "drivers.csv"))
 
-get_fp
-
-get_fp(i, type = "drivers")
-
 print("Collect Copy Number Region")
 
 tmp <- list()
@@ -52,20 +47,21 @@ fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "cn_region.csv"))
 
 print("Collect Copy Number Gene")
 
-tmp <- list()
+tmp <- list(); j <- 0
 system.time(
 for( i in patients){
+  j <- j+1
+  print(j); flush.console()
   i_file <- get_fp(i, type = "cnv_gene")
   if(file.exists(i_file)){
     tmp[[i]] <- 
-      reader(i_file, i) %>% se(sampleId, gene, minCopyNumber, maxCopyNumber, minMinorAlleleCopyNumber)
+      reader(i_file, i) %>% se(sampleId, chromosome, chromosomeBand, gene, minCopyNumber, maxCopyNumber, minMinorAlleleCopyNumber)
 }})
 
 fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "cn_gene.csv"))
 
 print("Collect Lilac")
 
-LILAC_DIR <- paste0(I_DIR, 'lilac/lilac_out/')
 lilac_patients <- unique(unlist(lapply(list.files(LILAC_DIR), function(i) strsplit(i, ".lilac")[[1]][1])))
 
 tmp <- list(); 
@@ -92,7 +88,6 @@ fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "lilac_qc.csv"))
 
 print("Collect Teal")
 
-TEAL_DIR <- paste0(I_DIR, 'teal/')
 teal_patients <- unique(unlist(lapply(list.files(TEAL_DIR), function(i) strsplit(i, ".teal")[[1]][1])))
 
 tmp <- list()
@@ -108,7 +103,6 @@ fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "teal.csv"))
 
 print("Collect Viral")
 
-VIRAL_DIR <- paste0(I_DIR, 'viral_integration/data/datasets/')
 viral_patients <- list.files(VIRAL_DIR)
 
 tmp <- list(); 
@@ -125,12 +119,11 @@ fwrite( fread( paste0(I_DIR, 'viral/data_viral_integration_filtered.tsv.gz')), p
 
 print("Collect CIDER")
 
-fwrite(fread(paste0(I_DIR, "cider/hmf_cider_dna.vdj.tsv")), paste0(TMP_DIR, "cider_dna.csv"))
-fwrite(fread(paste0(I_DIR, "cider/hmf_cider_rna.vdj.tsv")), paste0(TMP_DIR, "cider_rna.csv"))
+fwrite(fread(paste0(CIDER_DIR, "hmf_cider_dna.vdj.tsv")), paste0(TMP_DIR, "cider_dna.csv"))
+fwrite(fread(paste0(CIDER_DIR, "hmf_cider_rna.vdj.tsv")), paste0(TMP_DIR, "cider_rna.csv"))
 
 print("Collect Neoepitopes")
 
-NEO_DIR <- paste0(I_DIR, 'neo/data_neo/')
 neo_patients <- list.files(NEO_DIR)
 
 tmp <- list(); 
@@ -157,8 +150,7 @@ fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "neo_pep.csv"))
 
 print("Collect Isofox")
 
-ISO_DIR <- paste0(I_DIR, 'isofox/data_isofox/')
-isofox_patients <- list.files(ISO_DIR)
+isofox_patients <- list.files(ISOFOX_DIR)
 
 isofox_reader <- function( i_file, sample){
     fread( i_file ) %>% select(GeneId, GeneName, AdjTPM)  %>% setNames(c("GeneId","GeneName", sample)) 

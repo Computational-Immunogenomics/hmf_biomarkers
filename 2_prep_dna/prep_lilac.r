@@ -51,4 +51,4 @@ hla_supertypes %>%
  ij(zygosity, by = "sampleId") %>% 
  rename_with(~ paste0("lilac_", .), .cols = -sampleId)
 
-fwrite(juntos, paste0(TMP_DIR, "lilac_ready.csv"))
+fwrite(juntos, paste0(READY_DIR, "lilac_ready.csv"))

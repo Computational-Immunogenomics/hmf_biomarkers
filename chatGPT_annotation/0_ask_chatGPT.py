@@ -21,9 +21,9 @@ def ask_for_annotation( genes_string: str ):
 	return answer
 
 #### Run a marathon #### 
-#annotation = pd.read_csv("/Users/josephusset/Desktop/work/hartwig_driver_annotation_chatGPT.csv", on_bad_lines='warn', sep = ";")
-annotation = pd.read_csv("all_genes.csv", on_bad_lines='warn', sep = ";")
-genes = [i for i in annotation['Gene']]
+annotation = pd.read_csv("/Users/josephusset/Desktop/work/hartwig_driver_annotation_chatGPT.csv", on_bad_lines='warn', sep = ";")
+#annotation = pd.read_csv("all_genes.csv", on_bad_lines='warn', sep = ";")
+genes = [i for i in annotation['Gene']][1:20]
 
 answers = []
 group_size = 20

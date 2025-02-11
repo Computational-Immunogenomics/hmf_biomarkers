@@ -89,4 +89,4 @@ gie_ready <-
 
 gie_ready$gie <- ifelse(apply( gie_ready %>% select(contains("gie")), 1, sum) > 0, 1, 0)
 
-fwrite( gie_ready, file = paste0( TMP_DIR, "gie.csv") )
+fwrite( gie_ready, file = paste0( READY_DIR, "gie_ready.csv") )
