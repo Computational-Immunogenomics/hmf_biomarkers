@@ -18,7 +18,7 @@ SHARE_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/share/"
 REF_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ref/"
 INST_DIR="/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/deconvolution_output_merged/"
 UTIL_DIR="/mnt/bioinfnas/immunocomp/jusset/biomarkers/util/tmp/" 
-HELP_DIR="/mnt/bioinfnas2/immunocomp/jusset/biomarkers/helpers/"
+HELP_DIR="/home/josephusset@vhio.org/biomarkers/helpers/"
 
 ac <- function(i) as.character(i)
 

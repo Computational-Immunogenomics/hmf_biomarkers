@@ -21,4 +21,4 @@ cn %>%
 
 fwrite(cn_ready_simple, paste0(READY_DIR, "cn_simple_ready.csv"))
 
-cn_genes <- fread(paste0(TMP_DIR, "cn_gene.csv"))
+#cn_genes <- fread(paste0(TMP_DIR, "cn_gene.csv"))

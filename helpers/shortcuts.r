@@ -29,6 +29,7 @@ ma <- mutate_all
 ren <- rename_with
 uni <- unique
 ga <- gather
+m <- grepl
 
 ds <- function(w = 10, h = 6){
   options(repr.plot.width = w, repr.plot.height = h)
