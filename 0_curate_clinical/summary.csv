@@ -1,0 +1,147 @@
+primaryTumorLocation,cohort,ct,tot
+Breast,Breast ER+/HER-,680,1116
+Breast,Breast Triple Negative,173,1116
+Breast,Breast Unknown/Other,124,1116
+Breast,Breast ER+/HER+,100,1116
+Breast,Breast ER-/HER+,39,1116
+Lung,Lung NSCLC (LUAD),590,940
+Lung,Lung Unknown/Other,113,940
+Lung,Lung SCLC,72,940
+Lung,Lung NET,66,940
+Lung,Lung NSCLC (LUSC),65,940
+Lung,Lung NSCLC (LCLC),19,940
+Lung,Lung NSCLC (Unknown),15,940
+Colon,Colorectal Adenocarcinoma,788,839
+Colon,Colorectal Mucinous Adenocarcinoma,26,839
+Colon,Colorectal Other,20,839
+Colon,Colorectal NEC,5,839
+Cancer of unknown primary (CUP),CUPPA NA,99,608
+Cancer of unknown primary (CUP),Lung NSCLC (LUAD),54,608
+Cancer of unknown primary (CUP),CUPPA high confidence: HPB: Bile duct/Gallbladder,33,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Lung: Non-small cell: LUAD,27,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: HPB: Pancreas,26,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Esophagus/Stomach,21,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Colorectum/Small intestine/Appendix,20,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Colorectum/Small intestine/Appendix,20,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: HPB: Bile duct/Gallbladder,20,608
+Cancer of unknown primary (CUP),Skin Melanoma,17,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Gynecologic: Ovary/Fallopian tube,14,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Bone/Soft tissue: Other,13,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Anogenital,12,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Esophagus/Stomach,12,608
+Cancer of unknown primary (CUP),Pancreas PAAD,12,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Anogenital,10,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Urothelial tract,9,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Head and neck: Other,9,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: NET: Pancreas,9,608
+Cancer of unknown primary (CUP),Lung SCLC,9,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Bone/Soft tissue: Other,8,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Kidney: Other,8,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Skin: Other,8,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Breast: Other,8,608
+Cancer of unknown primary (CUP),Pancreas NET,8,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Gynecologic: Ovary/Fallopian tube,7,608
+Cancer of unknown primary (CUP),CUPPA high confidence: NET: Colorectum/Small intestine,7,608
+Cancer of unknown primary (CUP),CUPPA high confidence: NET: Lung,6,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Breast: Triple negative,6,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: HPB: Liver,6,608
+Cancer of unknown primary (CUP),Prostate,6,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Lung: Non-small cell: LUSC,5,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Gynecologic: Endometrium,4,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Head and neck: Adenoid cystic,4,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: CNS: Glioma,4,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Gynecologic: Endometrium,4,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Kidney: Other,4,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Prostate,4,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Urothelial tract,4,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Breast: Other,3,608
+Cancer of unknown primary (CUP),CUPPA high confidence: HPB: Liver,3,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Head and neck: Other,3,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Lymphoid tissue,3,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Mesothelium,3,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Head and neck: Salivary gland,3,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Lung: Small cell,3,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Mesothelium,3,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: NET: Lung,3,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Skin: Other,3,608
+Cancer of unknown primary (CUP),Lung NSCLC (LUSC),3,608
+Cancer of unknown primary (CUP),Breast Triple Negative,2,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Bone/Soft tissue: Leiomyosarcoma,2,608
+Cancer of unknown primary (CUP),CUPPA high confidence: Kidney: Chromophobe,2,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Bone/Soft tissue: Leiomyosarcoma,2,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Bone/Soft tissue: Undiff. sarcoma,2,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: CNS: Medulloblastoma,2,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: NET: Colorectum/Small intestine,2,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Myeloid: Myeloproliferative neoplasm,1,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Skin: Melanoma,1,608
+Cancer of unknown primary (CUP),CUPPA medium confidence: Thyroid gland,1,608
+Cancer of unknown primary (CUP),Soft tissue Undifferentiated,1,608
+Prostate,Prostate,548,548
+Soft tissue,Soft Tissue Sarcoma Unknown/Other,155,475
+Soft tissue,Soft tissue GIST,82,475
+Soft tissue,Soft tissue Leiomyosarcoma,78,475
+Soft tissue,Soft tissue Liposarcoma,53,475
+Soft tissue,Soft tissue Undifferentiated,51,475
+Soft tissue,Soft tissue Angiosarcoma,15,475
+Soft tissue,Soft tissue Solitary fibrous tumor,15,475
+Soft tissue,Soft tissue Synovial sarcoma,14,475
+Soft tissue,Soft tissue Myxofibrosarcoma,12,475
+Skin,Skin Melanoma,316,384
+Skin,Skin Basal Cell,25,384
+Skin,Skin Other,17,384
+Skin,Skin Squamous Cell Carcinoma,15,384
+Skin,Skin Merkel Cell Carcinoma,11,384
+Ovary,Ovary,302,302
+Pancreas,Pancreas PAAD,175,223
+Pancreas,Pancreas NET,36,223
+Pancreas,Pancreas Other,12,223
+Brain/central nervous system,Brain/CNS GBM,154,217
+Brain/central nervous system,Brain/CNS Unknown/Other,37,217
+Brain/central nervous system,Brain/CNS Astrocytoma,26,217
+Esophagus/gastroesophageal junction,Gastroesophageal,213,213
+Bladder,Bladder Urothelial,169,184
+Bladder,Bladder Other,15,184
+Kidney,Kidney (ccRCC),92,164
+Kidney,Kidney Unknown/Other,59,164
+Kidney,Kidney (pRCC),13,164
+Rectum,Colorectal Adenocarcinoma,142,155
+Rectum,Colorectal NEC,5,155
+Rectum,Colorectal Other,5,155
+Rectum,Colorectal Mucinous Adenocarcinoma,3,155
+Biliary tract,Biliary tract,111,111
+Cervix,Cervix,85,85
+Small bowel/intestine,Small bowel/intestine,85,85
+Endometrium/uterus,Endometrium/uterus,84,84
+Stomach,Stomach,68,68
+Pleura,Pleura,60,60
+Liver,Liver,57,57
+Ureter/renal pelvis,Ureter/renal pelvis,46,46
+NULL,NULL,45,45
+Anus,Anus,41,41
+Thyroid gland,Thyroid gland,34,34
+Unknown,Unknown,28,28
+Lymphoid,Lymphoid,26,26
+Salivary gland,Salivary gland,26,26
+Gallbladder,Gallbladder,25,25
+Appendix,Appendix,24,24
+Bone,Bone,21,21
+Thymus,Thymus,20,20
+Penis,Penis,18,18
+Vulva,Vulva,17,17
+Oral cavity/tongue,Oral cavity/tongue,15,15
+Urethra,Urethra,13,13
+Adrenal gland,Adrenal gland,12,12
+Nasal cavity,Nasal cavity,12,12
+Oropharynx,Oropharynx,11,11
+Other,Other,10,10
+Testis,Testis,10,10
+Urachus,Urachus,10,10
+Nasopharynx,Nasopharynx,9,9
+Vagina,Vagina,8,8
+Eye,Eye,7,7
+Paranasal sinuses,Paranasal sinuses,5,5
+Peritoneum,Peritoneum,5,5
+Ampulla of Vater,Ampulla of Vater,4,4
+Hypopharynx,Hypopharynx,4,4
+Larynx,Larynx,4,4
+Bone marrow/myeloid,Bone marrow/myeloid,3,3
