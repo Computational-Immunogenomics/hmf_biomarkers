@@ -44,17 +44,17 @@ get_stats2 <- function( y, x, covariate = "", data = "df", model = "bor" ){
   return(out)
 }
 scanner <- function (y = "Surv(Y_os_days, Y_os_event)", features, covariates, df = "df", mod = "coxph") {
- out <- data.frame()
- for (f in features) {  
-  if(grepl("rna_", f)){   
-   tmp <- get_stats2(y = y, x = f, covariate = paste0("+purity_purity", covariates), data = df, model = mod)
-  } else {
-   tmp <- get_stats2(y = y, x = f, covariate = covariates, data = df, model = mod)      
-  }
-  if (is.data.frame(tmp)) 
-  out <- rbind(out, tmp)
- }
- out
+    out <- data.frame()
+    for (f in features) {
+        if (grepl("rna_", f)) {
+            tmp <- get_stats2(y = y, x = f, covariate = paste0("+purity", covariates), data = df, model = mod)
+        }
+        else {
+            tmp <- get_stats2(y = y, x = f, covariate = covariates, data = df, model = mod)
+        }
+        if (is.data.frame(tmp)) out <- rbind(out, tmp)
+    }
+    out
 }
 mod_map <- list(
  "bestOverallResponse" = "bor",
