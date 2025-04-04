@@ -17,15 +17,15 @@ base %>%
  se(where(~n_distinct(.) > 1)) %>% 
  se(where(~ !all(. %in% c(0, NA)))) %>% 
  mu(across(where(is.numeric), ~ replace_na(., median(., na.rm = TRUE))),
-    biopsy = ifelse(biopsyStructure %in% c("Liver", "Lymph node", "Bone", "Lung"), biopsyStructure, "Other")) %>%
-  rename_with(~ str_replace_all(., "[^A-Za-z0-9]", "_"))
+    biopsy = ifelse(biopsyStructure %in% c("Liver", "Lymph node", "Bone", "Lung"), biopsyStructure, "Other")) 
 
 go <- rbind(ready, ready %>% mu(cohort = "Pan-Cancer"))
 
 metaprograms <- names(ready %>% se(contains("metaprogram_activity")))
 features <- names(ready %>% se(-sampleId, -contains("metaprogram"), -cohort, -biopsyStructure, -biopsy))
 cohorts <- go %>% gb(cohort) %>% su(ct = n()) %>% fi(ct > 30) %>% ar(desc(ct)) %>% pu(cohort)
-covariates <- c("", "+ as.factor(biopsy)", "+ as.factor(biopsy) + purity")
+#covariates <- c("", "+ as.factor(biopsy)", "+ as.factor(biopsy) + purity")
+covariates <- c("+ as.factor(biopsy)")
 
 go <- go %>% mu(across(any_of(features), scale))
 
