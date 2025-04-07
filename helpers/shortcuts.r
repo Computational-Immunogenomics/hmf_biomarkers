@@ -36,6 +36,13 @@ ds <- function(w = 10, h = 6){
 } 
 df <- data.frame
 
+top <- function(data, group_col) {
+  data %>%
+   group_by({{ group_col }}) %>%
+   summarise(ct := n(), .groups = "drop") %>%
+   arrange(desc(ct))
+}
+
 go_theme <- 
 theme_bw() + 
 theme(
