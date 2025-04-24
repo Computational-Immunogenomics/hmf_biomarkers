@@ -11,7 +11,7 @@ base %>%
  se( sampleId, biopsyStructure, 
      contains("cider_"), contains("clin_"), contains("cn_"), contains("driver"), contains("fusion_"), contains("gie_"), contains("lilac_"), 
      contains("purity"), contains("sv_"), contains("teal_"), contains("viral_"), contains("bacterial_"), contains("metaprogram_"), 
-     contains("chord_"), contains("hotspot"), contains("neo_")) %>% 
+     contains("chord_"), contains("hotspot"), contains("neo_"), contains("signature")) %>% 
  drop_na(metaprogram_MP1_Cell_Cycle_G2M) %>% 
  lj(cohorts %>% se(sampleId, cohort), by = "sampleId")  %>% 
  se(where(~n_distinct(.) > 1)) %>% 
@@ -24,8 +24,8 @@ go <- rbind(ready, ready %>% mu(cohort = "Pan-Cancer"))
 metaprograms <- names(ready %>% se(contains("metaprogram_activity")))
 features <- names(ready %>% se(-sampleId, -contains("metaprogram"), -cohort, -biopsyStructure, -biopsy))
 cohorts <- go %>% gb(cohort) %>% su(ct = n()) %>% fi(ct > 30) %>% ar(desc(ct)) %>% pu(cohort)
-#covariates <- c("", "+ as.factor(biopsy)", "+ as.factor(biopsy) + purity")
-covariates <- c("+ as.factor(biopsy)")
+covariates <- c("", "+ as.factor(biopsy)", "+ as.factor(biopsy) + purity")
+#covariates <- c("+ as.factor(biopsy)")
 
 go <- go %>% mu(across(any_of(features), scale))
 
