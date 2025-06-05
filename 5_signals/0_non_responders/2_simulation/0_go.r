@@ -13,17 +13,19 @@ go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05) {
   if( events > 0 ){
     Y_event <- df( "event" = 1, response = rbinom( events, 1, p_event))
     Y_non_event <- df( "event" = 0, response = rbinom( non_events, 1, p_base))
-    ready <- rbind(Y_event, Y_non_event)
+    ready <- rbind(Y_event, Y_non_event) 
   } else {
     ready<- df( "event" = 0, response = rbinom( non_events, 1, p_base))
   }
   responders <- sum(ready$response)
+  responders_event <- ready %>% mu(event_and_response = ifelse(event + response == 2, 1, 0)) %>% su(a = sum(event_and_response)) %>% pu(a)
   non_responders <- n - sum(ready$response)  
     
   if( (events > 0) && (responders > 0)){  
     fisher <- fisher.test(table(ready))
     df( n = n, 
         events = events, 
+        responders_event = responders_event, 
         non_events = non_events, 
         responders = responders, 
         prevalence = prevalence, 
@@ -34,13 +36,13 @@ go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05) {
         ci.low = fisher$conf.int[1], 
         ci.high = fisher$conf.int[2])
   } else {
-    df( n = n, events = events, non_events = non_events, responders = NA, 
+    df( n = n, events = events, responders_event = NA, non_events = non_events, responders = NA, 
         prevalence = prevalence, p_base = p_base, p_event = p_event, p_fisher = 1, or = NA, ci.low = NA, ci.high = NA)
   }
 }
 
 set.seed(62220)
-nsim <- 1000
+nsim <- 250
 ns <- c(20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 1000)
 prevalence <- c(.01, .05, .1, .3, .5, .8)
 p_base <- c(.4, .3, .2, .1)
@@ -56,6 +58,7 @@ for( z in seq(nsim)){
    for ( k in p_event ){
     for( l in prevalence ) {   
      tmp <- tryCatch({go(n = i, prevalence = l, p_base = j, p_event = k)}, error = function(e) {return(NA)})
+     rownames(tmp) <- NULL
      if(is.data.frame(tmp)) oo <- rbind(oo, tmp)
 }}}}})
 
