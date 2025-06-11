@@ -9,13 +9,59 @@ all %>%
  mu(nrBor = abs(bestOverallResponse-1), non_response = abs(durableClinicalBenefit-1)) %>%
  se(-contains("geneset_mp_")); dim(ready)
 
+fwrite( ready %>% se(derived_treatmentName, derived_treatmentMechanism) %>% unique(), 
+        paste0(SHARE_DIR, "treatment_mechanism_map.csv"))
+
 dim(ready %>% fi(!is.na(rna_geneset_battle_tcell_effector_cd8)))
 
 base_features <- 
 names(ready %>% se( contains("cider_"), contains("clin_"), contains("cn_"), contains("driver"), 
                     contains("fusion"), contains("gie_"), contains("lilac_"), contains("neo_"), contains("chord"), 
-                    contains("purity"), contains("rna_"), contains("sv_"), contains("teal_"), contains("viral_"), 
-                    contains("hotspot"), contains("bacterial"), contains("teal"), contains("signature")))
+                    contains("purity"), contains("rna_"), contains("teal_"), contains("viral_"), #contains("sv_"),
+                    contains("hotspot"), contains("bacterial"), contains("teal"), contains("signature"), -contains("rand1")))
+
+cn_features <- names(ready %>% se(contains("cn_"), -contains("hla_cn")))
+
+cn_ploidy_features <- ready %>% mutate(across(cn_features, ~ .x / purity_ploidy)) %>% se(all_of(cn_features)) 
+
+cn_dels <- cn_ploidy_features %>% mu(across(everything(), ~ (. <= .7))) %>% rename_with(~ paste0(.x, "_del"))
+cn_no_dels <- cn_ploidy_features %>% mu(across(everything(), ~ (. > .7))) %>% rename_with(~ paste0(.x, "_no_del"))
+cn_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. >= 1.3))) %>% rename_with(~ paste0(.x, "_amp"))
+cn_no_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. < 1.3))) %>% rename_with(~ paste0(.x, "_no_amp"))
+
+tmb_msi <- data.frame(exp(ready %>% se(contains("PerMb"))-1), ready %>% se(purity_msStatus, purity_tmbStatus, purity_tmlStatus))
+
+tmb_features <- 
+tmb_msi %>% 
+ mu( purity_tmbPerMb_gt2 = (purity_tmbPerMb > 2),
+     purity_tmbPerMb_gt4 = (purity_tmbPerMb > 4),
+     purity_tmbPerMb_gt6 = (purity_tmbPerMb > 6),
+     purity_tmbPerMb_gt8 = (purity_tmbPerMb > 8),
+     purity_tmbPerMb_gt12 = (purity_tmbPerMb > 12), 
+     purity_tmbPerMb_lt2 = (purity_tmbPerMb < 2),
+     purity_tmbPerMb_lt4 = (purity_tmbPerMb < 4),
+     purity_tmbPerMb_lt6 = (purity_tmbPerMb < 6),
+     purity_tmbPerMb_lt8 = (purity_tmbPerMb < 8),
+     purity_tmbPerMb_lt12 = (purity_tmbPerMb < 12), 
+     purity_tmlStatus_high = purity_tmlStatus, 
+     purity_tmlStatus_low = 1 - purity_tmlStatus, 
+     purity_tmbStatus_high = purity_tmbStatus, 
+     purity_tmbStatus_low = 1 - purity_tmbStatus
+   ) %>% 
+ se(contains("purity_tmbPerMb_"), contains("Status_"))
+
+msi_features <- 
+tmb_msi %>% 
+  mu(purity_msIndelsPerMb_gt1 = (purity_msIndelsPerMb > 1),
+     purity_msIndelsPerMb_gt2 = (purity_msIndelsPerMb > 2),
+     purity_msIndelsPerMb_lt1 = (purity_msIndelsPerMb < 1),
+     purity_msIndelsPerMb_lt2 = (purity_msIndelsPerMb < 2),
+     purity_msStatus_high = purity_msStatus, 
+     purity_msStatus_low = 1 - purity_msStatus
+   ) %>% 
+ se(contains("purity_msIndelsPerMb_"), contains("Status_"))
+
+ready <- ready %>% se(-all_of(cn_features), -purity_msStatus, -purity_tmbStatus, -purity_tmlStatus, -contains("PerMb") )
 
 filter_ref <- 
 data.frame("mn" = apply(ready %>% se(any_of(base_features)), 2, mean, na.rm = TRUE), 
@@ -27,12 +73,8 @@ data.frame("mn" = apply(ready %>% se(any_of(base_features)), 2, mean, na.rm = TR
  mu(pct_zeros = zeros/(zeros+non_zeros), pct_nas = nas/(nas+non_nas)) %>%
  rownames_to_column("feature")
 
-dim(ready %>% se(any_of(base_features)) %>% se(contains("driver_")))
-
-length(base_features)
-
-base_features <- filter_ref %>% fi(pct_zeros < .99, non_nas > 100) %>% pu(feature)
-sparse_features <- filter_ref %>% fi(pct_zeros < .99, pct_zeros > .5, non_nas > 100) %>% pu(feature)
+base_features <- filter_ref %>% fi(pct_zeros < .97, non_nas > 100) %>% pu(feature)
+sparse_features <- filter_ref %>% fi(pct_zeros < .97, pct_zeros > .5, non_nas > 100) %>% pu(feature)
 non_sparse_features <- filter_ref %>% fi(pct_zeros <= .5, non_nas > 100) %>% pu(feature)
 
 bin_go <- ready %>% se(all_of(base_features)) %>% select(where(~all(. %in% c(0, 1, NA))))
@@ -40,8 +82,7 @@ non_bin_non_sparse_go <- ready %>% se(all_of(non_sparse_features)) %>% select(!w
 non_bin_sparse_go <- ready %>% se(all_of(sparse_features)) %>% select(!where(~all(. %in% c(0, 1, NA)))) 
 
 integerer <- function(df){
- df[] <- lapply(df, function(x) if(is.logical(x)) as.integer(x) else x); 
- df    
+ df[] <- lapply(df, function(x) if(is.logical(x)) as.integer(x) else x); df    
 }
 
 binarify <- function(df, threshold = 50, direction = "gt" ){
@@ -94,11 +135,16 @@ pathways_affected <-
         driver_pathways_gt8 = as.numeric(drivers_pathway_total > 8)) %>%  
   se(contains("driver_pathways_lt"), contains("driver_pathways_gt"))
 
-features_ready <- cbind(bin_go, gt50, lt50, gt25, gt75, lt25, lt75, sparse_gt, sparse_lt, pathways_affected)
+features <- 
+cbind(bin_go, gt50, lt50, gt25, gt75, lt25, lt75, 
+      sparse_gt, sparse_lt, 
+      pathways_affected, 
+      cn_dels, cn_no_dels, cn_amps, cn_no_amps, 
+      tmb_features, msi_features) %>%
+  mutate(across(where(is.logical), as.integer))
 
-ready <- cbind(ready %>% se(-all_of(base_features)), features_ready)
+go <- 
+cbind(ready %>% se(-contains(base_features), -contains("metaprogram"), -contains("sv_"), -contains("rand1")), features) %>% 
+ rw() %>% mu(groupedTreatmentType = paste0(unique(strsplit(derived_treatmentType, " ## ")[[1]]), collapse = " ## ")) %>% ug()
 
-dim(ready)
-
-saveRDS( list("ready" = ready, "features" = names(features_ready)), 
-         paste0(SHARE_DIR, "biomarkers_ready.Rds"))
+saveRDS( list("ready" = go, "features" = names(features)), paste0(SHARE_DIR, "biomarkers_ready.Rds"))

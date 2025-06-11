@@ -12,6 +12,8 @@ go %>%
  fi(cohortGo %in% (cohorts %>% pu(cohortGo))) %>% 
  se(cohortGo, non_response, any_of(categorical_features))
 
+dim(ra_ready)
+
 ra_go <- ra_formatter_and_test(ra_ready)
 
 fwrite(ra_go %>% lj(cohorts, by = "cohortGo"), paste0(SHARE_DIR, "1_run_fishers_exact.csv"))

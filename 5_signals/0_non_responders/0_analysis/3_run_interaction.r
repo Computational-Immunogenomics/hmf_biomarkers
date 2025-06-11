@@ -9,10 +9,7 @@ library(purrr)
 univariate_results <- fread(paste0(SHARE_DIR, "1_run_fishers_exact.csv")) 
 fisher_base <- fread(paste0(SHARE_DIR, "fisher_base.csv"))
 
-top <- 
-univariate_results %>% 
- fi(fisher_pval < combination_threshold) %>% 
- gb(cohortGo, grepl("driver", feature)) %>% mu(rk = row_number(fisher_pval)) %>% ug()
+top <- univariate_results %>% fi(fisher_pval < combination_threshold) 
 
 auto_cluster_features <- function(data, method = "average", max_clusters = 5, corr_method = "pearson") {
   # Ensure features are columns
@@ -62,7 +59,7 @@ add_cluster_labels <- function(i = "Skin Melanoma ## Immunotherapy"){
 
 cluster_labels <- data.frame()
 for( i in unique(top$cohortGo)){
-  print(i)
+  print(i); flush.console();
   tmp <- tryCatch({add_cluster_labels(i)}, error = function(e) {return(NA)})
   if(is.data.frame(tmp)) cluster_labels <- rbind(cluster_labels, tmp)  
 }
@@ -72,17 +69,42 @@ top %>%
  lj(cluster_labels, by = c("cohortGo", "feature")) %>% 
  gb(cohortGo, cluster) %>% mu(rk = row_number(fisher_pval)) %>% fi(rk <= 10) %>%
  se(cohortGo, feature, cluster) %>% 
- ug()
+ ug() %>% 
+ drop_na()
+
+features <- top_go %>% fi(i == cohortGo) %>% pu(feature)
+clusters <- top_go %>% fi(i == cohortGo) %>% pu(cluster)
 
 feature_pair <- list()
 for( i in unique(top$cohortGo)){
     features <- top_go %>% fi(i == cohortGo) %>% pu(feature)
+    clusters <- top_go %>% fi(i == cohortGo) %>% pu(cluster)
     if(length(features) > 1){
         feature_pair[[i]][["pairs"]] <- combn(features, 2, simplify = FALSE)
+        feature_pair[[i]][["clusters"]] <- combn(clusters, 2, simplify = FALSE)
     } 
 }
 
-add_combination_feature <- function(i = "Skin Melanoma ## Immunotherapy", pair = c('clin_hasRadiotherapyPreTreatment','driver_B2M')){
+cluster_index <- data.frame()
+for(i in names(feature_pair)){
+  tmp_and <- 
+  df(cohortGo = i,
+     feature = unlist(lapply(feature_pair[[i]]$pairs, function(i) paste0(i[1], "_and_", i[2]))),
+     clusters = unlist(lapply(feature_pair[[i]]$clusters, function(i) length(unique(i)))))
+
+  tmp_or <- 
+  df(cohortGo = i, 
+     feature = unlist(lapply(feature_pair[[i]]$pairs, function(i) paste0(i[1], "_or_", i[2]))),
+     clusters = unlist(lapply(feature_pair[[i]]$clusters, function(i) length(unique(i)))))
+                      
+  cluster_index <- rbind(cluster_index, tmp_and)
+  cluster_index <- rbind(cluster_index, tmp_or)                    
+}
+
+fwrite(cluster_index, paste0(SHARE_DIR, "cluster_index.csv"))
+
+add_combination_feature <- function(i = "Skin Melanoma ## Immunotherapy", 
+                                    pair = c('clin_hasRadiotherapyPreTreatment','driver_B2M')){
   fisher_base %>% 
    filter( cohortGo == i) %>% 
    select( sampleId, cohortGo, non_response, any_of(pair)) %>% 
@@ -102,14 +124,16 @@ add_combination_feature <- function(i = "Skin Melanoma ## Immunotherapy", pair =
 
 cohort_combinations <- function(i = "Skin Melanoma ## Immunotherapy"){
   pairs <- feature_pair[[i]][['pairs']]
+    
   combos <- list()
   for( j in seq(length(pairs)) ){
     pair_ready <- pairs[[j]]
     combos[[j]] <- add_combination_feature(i = i, pair = pair_ready)
   }
+  ## Do separately for same or different clusters   
   clean_combos <- Filter(Negate(is.null), combos)  
   reduce(clean_combos, ~ inner_join(.x, .y, by = c("sampleId", "cohortGo", "non_response")))  
-}
+} 
 
 combos_ready <- list()
 
@@ -145,6 +169,9 @@ combo_results %>%
  mu(type = "combination", dcb = responders, no_dcb = non_responders, ct = no_dcb + dcb) %>% 
  lj(univariate_results %>% se(cohortGo, group) %>% unique(), by = "cohortGo")
 
-together <- rbind(univariate_results %>% mu(type = "univariate"), combo_results_ready)
+together <- 
+rbind(univariate_results %>% mu(type = "univariate"), combo_results_ready) %>% 
+ lj(cluster_index, by = c("cohortGo", "feature")) %>% 
+ mu(clusters = ifelse(is.na(clusters), 1, clusters))
 
 fwrite( together, paste0(SHARE_DIR, "2b_go.csv"))

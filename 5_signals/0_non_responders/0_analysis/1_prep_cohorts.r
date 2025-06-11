@@ -3,15 +3,10 @@ source(paste0(HELP_DIR, "shortcuts.r"))
 source(paste0(HELP_DIR, "helpers.r"))
 source(paste0(HELP_DIR, "fisher.r"))
 
-library(ggh4x)
-library(patchwork)
+#library(ggh4x)
+#library(patchwork)
 
-ii <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.Rds"))
-ready <- 
-ii$ready %>% 
- rw() %>% 
- mu(groupedTreatmentType = paste0(unique(strsplit(derived_treatmentType, " ## ")[[1]]), collapse = " ## ")) %>% 
- ug()
+ready <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.Rds"))$ready 
 
 cohorts <- 
 fread("/mnt/bioinfnas2/immunocomp/shared_reference_data/cohorts/cohorts_ready.csv") %>% 
@@ -25,6 +20,11 @@ rbind(ready %>% lj(cohorts, by = "sampleId"), ready %>% mu(cohort = "Pan-Cancer"
 go_mechanism <- 
 rbind(ready %>% lj(cohorts, by = "sampleId"), ready %>% mu(cohort = "Pan-Cancer")) %>% 
  mu(cohortGo = paste0(cohort, " ## ", derived_treatmentMechanism), group = "mechanism")
+
+go_cpi <- 
+rbind(ready %>% lj(cohorts, by = "sampleId"), ready %>% mu(cohort = "Pan-Cancer")) %>% 
+ fi(groupedTreatmentType %in% "Immunotherapy") %>% 
+ mu(cohortGo = paste0(cohort, " ## ", "Immune Checkpoint Inhibitor"), group = "mechanism" )
 
 go_type <- 
 rbind(ready %>% lj(cohorts, by = "sampleId"), ready %>% mu(cohort = "Pan-Cancer")) %>% 
@@ -47,14 +47,14 @@ c("Pancreas PAAD ## Fluorouracil ## Irinotecan ## Leucovorin ## Oxaliplatin" = "
 
 go <- 
 go_treat %>% 
- bind_rows(go_mechanism) %>% bind_rows(go_type) %>% bind_rows(all) %>% 
+ bind_rows(go_mechanism) %>% bind_rows(go_cpi) %>% bind_rows(go_type) %>% bind_rows(all) %>% 
  fi(!cohortGo %in% remove) %>% 
  mu(cohortGo = ifelse(cohortGo %in% names(cohort_maps), cohort_maps[cohortGo], cohortGo), 
     pan = grepl("Pan-Cancer", cohortGo))
 
 fwrite(go, paste0(SHARE_DIR, "fisher_base.csv"))
 
-min_patients <- 30
+min_patients <- 30; min_response <- 15
 
 top_mechanisms <- 
 go %>% 
