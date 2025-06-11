@@ -2,7 +2,7 @@ source(paste0(dirname(dirname(dirname(getwd()))),'/map.r'))
 source(paste0(HELP_DIR, "shortcuts.r"))
 source(paste0(HELP_DIR, "helpers.r"))
 
-go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05) {
+go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05, z = 1) {
 
   ### Simulate events 
   X <- rbinom(n, 1, prevalence)
@@ -34,19 +34,19 @@ go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05) {
         p_fisher = fisher$p.value, 
         or = fisher$estimate, 
         ci.low = fisher$conf.int[1], 
-        ci.high = fisher$conf.int[2])
+        ci.high = fisher$conf.int[2], 
+        z = z)
   } else {
     df( n = n, events = events, responders_event = NA, non_events = non_events, responders = NA, 
-        prevalence = prevalence, p_base = p_base, p_event = p_event, p_fisher = 1, or = NA, ci.low = NA, ci.high = NA)
+        prevalence = prevalence, p_base = p_base, p_event = p_event, p_fisher = 1, or = NA, ci.low = NA, ci.high = NA, z = z)
   }
 }
 
 set.seed(62220)
-nsim <- 250
-ns <- c(20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 1000)
-prevalence <- c(.01, .05, .1, .3, .5, .8)
-p_base <- c(.4, .3, .2, .1)
-#p_base <- c(.4)
+nsim <- 1000
+ns <- c(30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 1000)
+prevalence <- c(.01, .05, .1, .5)
+p_base <- c(.4, .2)
 p_event <- c(.4, .2, .1, .01, 0)
 
 oo <- data.frame()
@@ -57,9 +57,10 @@ for( z in seq(nsim)){
   for( j in p_base ){  
    for ( k in p_event ){
     for( l in prevalence ) {   
-     tmp <- tryCatch({go(n = i, prevalence = l, p_base = j, p_event = k)}, error = function(e) {return(NA)})
+     if( k <= j){
+     tmp <- tryCatch({go(n = i, prevalence = l, p_base = j, p_event = k, z = z)}, error = function(e) {return(NA)})
      rownames(tmp) <- NULL
      if(is.data.frame(tmp)) oo <- rbind(oo, tmp)
-}}}}})
+}}}}}})
 
-fwrite(oo, "sim_go_new.csv")
+fwrite(oo, paste0(SHARE_DIR, "5_simulation_results.csv"))
