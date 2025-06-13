@@ -63,4 +63,20 @@ for( z in seq(nsim)){
      if(is.data.frame(tmp)) oo <- rbind(oo, tmp)
 }}}}}})
 
+go_binom_test <- function( n, x, p = .02) {
+   if(is.na(x)){1}
+   else if (n == 0) {1}
+   else{ binom.test(x, n, p, alternative = "less")$p.value } 
+}
+
+go <- 
+oo %>% 
+ rw() %>% 
+ mu(expected_events = n*prevalence, 
+    pval_under01 = go_binom_test(events, responders_event, .01), 
+    pval_under2 = go_binom_test(events, responders_event, .02), 
+    pval_under5 = go_binom_test(events, responders_event, .05),
+    pval_under10 = go_binom_test(events, responders_event, .1)) %>% 
+ ug()
+
 fwrite(oo, paste0(SHARE_DIR, "5_simulation_results.csv"))

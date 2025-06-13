@@ -169,9 +169,19 @@ combo_results %>%
  mu(type = "combination", dcb = responders, no_dcb = non_responders, ct = no_dcb + dcb) %>% 
  lj(univariate_results %>% se(cohortGo, group) %>% unique(), by = "cohortGo")
 
+combiner <- function(a){
+ b <- strsplit(a, "_")[[1]]
+ paste0(b[-length(b)], collapse = "_")
+}
+
 together <- 
 rbind(univariate_results %>% mu(type = "univariate"), combo_results_ready) %>% 
  lj(cluster_index, by = c("cohortGo", "feature")) %>% 
- mu(clusters = ifelse(is.na(clusters), 1, clusters))
+ mu(clusters = ifelse(is.na(clusters), 1, clusters)) %>% 
+ rw() %>% mu(short_feature = combiner(feature)) %>% ug() %>% 
+ gb(cohortGo, short_feature, fisher_pval) %>% mu(tot = n()) %>% 
+ fi(tot == 1 | direction == "Non-Response")
+
+dim(together)
 
 fwrite( together, paste0(SHARE_DIR, "2b_go.csv"))

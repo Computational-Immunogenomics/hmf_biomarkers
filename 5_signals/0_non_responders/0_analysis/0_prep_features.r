@@ -29,7 +29,7 @@ cn_no_dels <- cn_ploidy_features %>% mu(across(everything(), ~ (. > .7))) %>% re
 cn_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. >= 1.3))) %>% rename_with(~ paste0(.x, "_amp"))
 cn_no_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. < 1.3))) %>% rename_with(~ paste0(.x, "_no_amp"))
 
-tmb_msi <- data.frame(exp(ready %>% se(contains("PerMb"))-1), ready %>% se(purity_msStatus, purity_tmbStatus, purity_tmlStatus))
+tmb_msi <- data.frame(exp(ready %>% se(contains("PerMb"))-1), ready %>% se(purity_msStatus, purity_tmbStatus, purity_tmlStatus, chord_hrStatus))
 
 tmb_features <- 
 tmb_msi %>% 
@@ -46,7 +46,9 @@ tmb_msi %>%
      purity_tmlStatus_high = purity_tmlStatus, 
      purity_tmlStatus_low = 1 - purity_tmlStatus, 
      purity_tmbStatus_high = purity_tmbStatus, 
-     purity_tmbStatus_low = 1 - purity_tmbStatus
+     purity_tmbStatus_low = 1 - purity_tmbStatus, 
+     chord_hrStatus_high = chord_hrStatus, 
+     chord_hrStatus_low = 1 - chord_hrStatus
    ) %>% 
  se(contains("purity_tmbPerMb_"), contains("Status_"))
 
@@ -61,7 +63,7 @@ tmb_msi %>%
    ) %>% 
  se(contains("purity_msIndelsPerMb_"), contains("Status_"))
 
-ready <- ready %>% se(-all_of(cn_features), -purity_msStatus, -purity_tmbStatus, -purity_tmlStatus, -contains("PerMb") )
+ready <- ready %>% se(-all_of(cn_features), -purity_msStatus, -purity_tmbStatus, -purity_tmlStatus, -chord_hrStatus, -contains("PerMb") )
 
 filter_ref <- 
 data.frame("mn" = apply(ready %>% se(any_of(base_features)), 2, mean, na.rm = TRUE), 
