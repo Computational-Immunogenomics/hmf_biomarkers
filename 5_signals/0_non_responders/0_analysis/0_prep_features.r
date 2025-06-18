@@ -75,7 +75,7 @@ data.frame("mn" = apply(ready %>% se(any_of(base_features)), 2, mean, na.rm = TR
  mu(pct_zeros = zeros/(zeros+non_zeros), pct_nas = nas/(nas+non_nas)) %>%
  rownames_to_column("feature")
 
-base_features <- filter_ref %>% fi(pct_zeros < .97, non_nas > 100) %>% pu(feature)
+base_features <- filter_ref %>% fi(pct_zeros < .97, non_nas > 100, feature != "purity") %>% pu(feature)
 sparse_features <- filter_ref %>% fi(pct_zeros < .97, pct_zeros > .5, non_nas > 100) %>% pu(feature)
 non_sparse_features <- filter_ref %>% fi(pct_zeros <= .5, non_nas > 100) %>% pu(feature)
 

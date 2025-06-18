@@ -144,6 +144,15 @@ for( i in names(feature_pair)){
     }
 }
 
+together <- do.call("bind_rows", combos_ready)
+
+survival_ready <- fisher_base %>% lj(together %>% se(-non_response), by = c("cohortGo", "sampleId"))
+combination_features <- names(together %>% se(-sampleId, -cohortGo, -non_response))
+
+saveRDS( list("ready" = survival_ready, 
+              "combination_features" = combination_features), 
+         paste0(SHARE_DIR, "biomarkers_survival_ready.Rds"))
+
 combo_results <- data.frame()
 
 for( i in names(combos_ready)){
@@ -155,6 +164,8 @@ for( i in names(combos_ready)){
 }
 
 combo_results <- data.frame()
+
+combos_ready[[i]] %>% se(-sampleId)
 
 for( i in names(combos_ready)){
     print(i); flush.console()
@@ -181,7 +192,5 @@ rbind(univariate_results %>% mu(type = "univariate"), combo_results_ready) %>%
  rw() %>% mu(short_feature = combiner(feature)) %>% ug() %>% 
  gb(cohortGo, short_feature, fisher_pval) %>% mu(tot = n()) %>% 
  fi(tot == 1 | direction == "Non-Response")
-
-dim(together)
 
 fwrite( together, paste0(SHARE_DIR, "2b_go.csv"))

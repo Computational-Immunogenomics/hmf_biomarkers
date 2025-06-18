@@ -3,9 +3,6 @@ source(paste0(HELP_DIR, "shortcuts.r"))
 source(paste0(HELP_DIR, "helpers.r"))
 source(paste0(HELP_DIR, "fisher.r"))
 
-#library(ggh4x)
-#library(patchwork)
-
 ready <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.Rds"))$ready 
 
 cohorts <- 

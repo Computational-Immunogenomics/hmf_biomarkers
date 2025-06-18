@@ -12,8 +12,33 @@ go %>%
  fi(cohortGo %in% (cohorts %>% pu(cohortGo))) %>% 
  se(cohortGo, non_response, any_of(categorical_features))
 
-dim(ra_ready)
-
 ra_go <- ra_formatter_and_test(ra_ready)
 
-fwrite(ra_go %>% lj(cohorts, by = "cohortGo"), paste0(SHARE_DIR, "1_run_fishers_exact.csv"))
+scanner <- function (y = "Surv(daysToPfsEvent, pfsEvent)", features, covariates, df = "df", mod = "coxph", cohort = "Pan-Cancer") {
+    out <- data.frame()
+    if(grepl("Pan-Cancer", cohort)) covariates = paste0(covariates, "+ as.factor(primaryTumorLocation)")
+    for (f in features) {
+        if (grepl("rna_", f)) {tmp <- get_stats2(y = y, x = f, covariate = paste0(covariates, "+ purity"), data = df, model = mod)} 
+        else {tmp <- get_stats2(y = y, x = f, covariate = covariates, data = df, model = mod)}
+        if (is.data.frame(tmp)) out <- rbind(out, tmp)
+    }
+    out
+}
+
+oo_survival <- data.frame()
+for( i in cohorts$cohortGo ){
+  print(i); flush.console();
+  tmp <- go %>% fi(cohortGo == i)
+  tmp_oo <- scanner(  feature = categorical_features, covariates = "", df = "tmp", cohort = i)
+  if( nrow(tmp_oo) > 0 ){
+   oo_survival <- rbind(oo_survival, tmp_oo %>% mu(cohortGo = i) %>% se(-lrt_pval, -data, -model))
+  }
+}
+
+lets_go <- 
+ra_go %>%
+ lj(oo_survival %>% tm( cohortGo, feature = x, surv_est = est, surv_se = se, surv_pval = pval), 
+    by = c("feature", "cohortGo")) %>% 
+ lj(cohort, by = "cohortGo")
+
+fwrite(lets_go, paste0(SHARE_DIR, "2_run_marginal_output.csv"))
