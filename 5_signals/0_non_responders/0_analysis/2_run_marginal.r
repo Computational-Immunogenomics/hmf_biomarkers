@@ -39,6 +39,6 @@ lets_go <-
 ra_go %>%
  lj(oo_survival %>% tm( cohortGo, feature = x, surv_est = est, surv_se = se, surv_pval = pval), 
     by = c("feature", "cohortGo")) %>% 
- lj(cohort, by = "cohortGo")
+ lj(cohorts, by = "cohortGo")
 
 fwrite(lets_go, paste0(SHARE_DIR, "2_run_marginal_output.csv"))
