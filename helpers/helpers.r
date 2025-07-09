@@ -56,6 +56,18 @@ scanner <- function (y = "Surv(Y_os_days, Y_os_event)", features, covariates, df
     }
     out
 }
+scanner_non_responders <- function (y = "Surv(daysToPfsEvent, pfsEvent)", features, covariates, df = "df", mod = "coxph", cohort = "Pan-Cancer") {
+    out <- data.frame()
+    if(grepl("Pan-Cancer", cohort)) covariates = paste0(covariates, "+ as.factor(primaryTumorLocation)")
+    for (f in features) {
+        if (grepl("rna_", f)) {tmp <- get_stats2(y = y, x = f, covariate = paste0(covariates, "+ purity"), data = df, model = mod)} 
+        else {tmp <- get_stats2(y = y, x = f, covariate = covariates, data = df, model = mod)}
+        if (is.data.frame(tmp)) out <- rbind(out, tmp)
+    }
+    out
+}
+
+
 mod_map <- list(
  "bestOverallResponse" = "bor",
  "durableClinicalBenefit" = "bor",

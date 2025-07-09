@@ -43,9 +43,10 @@ go <- function(n = 100, prevalence = .5, p_base = .4, p_event = .05, z = 1) {
 }
 
 set.seed(62220)
-nsim <- 1000
-ns <- c(30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 1000)
-prevalence <- c(.01, .05, .1, .5)
+nsim <- 200
+ns <- c(30, 40, 50, 60, 70, 80, 90, 100, 150, 175, 200, 225, 250, 300, 350, 400, 500, 500, 600, 700, 800, 900, 1000, 
+        1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 9000, 10000)
+prevalence <- c(.01, .05, .07, .1, .5) ### add prevalences from examples 
 p_base <- c(.4, .2)
 p_event <- c(.4, .2, .1, .01, 0)
 
@@ -79,4 +80,4 @@ oo %>%
     pval_under10 = go_binom_test(events, responders_event, .1)) %>% 
  ug()
 
-fwrite(oo, paste0(SHARE_DIR, "5_simulation_results.csv"))
+fwrite(oo, paste0(SHARE_DIR, "4_simulation_results.csv"))
