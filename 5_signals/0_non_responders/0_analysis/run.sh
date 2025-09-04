@@ -1,6 +1,5 @@
 jupyter nbconvert --to script *.ipynb
 echo "Prep features"; Rscript 0_prep_features.r;
 echo "Prep cohorts"; Rscript 1_prep_cohorts.r;
-echo "Run marginal tests"; Rscript 2_run_marginal.r;
-echo "Run combination tests"; Rscript 3_ready_interaction.r;
-echo "Run simulation .."; Rscript 4_simulation.r;
+echo "Run marginal tests"; Rscript 2_run.r;
+echo "Run combination tests"; Rscript 3_ready.r;
