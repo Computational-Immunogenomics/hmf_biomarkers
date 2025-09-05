@@ -1,6 +1,4 @@
-
 ### Specify input directories for the Hartwig data ###
-#I_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/"
 I_DIR = "/mnt/immunocompnas1/datasets/hartwig/"
 SOM_DIR = paste0(I_DIR, "somatics/")
 ISOFOX_DIR = paste0(I_DIR, "isofox/data_isofox/")
@@ -9,19 +7,18 @@ TEAL_DIR = paste0(I_DIR, "teal/")
 NEO_DIR = paste0(I_DIR, "neo/data_neo/")
 VIRAL_DIR = paste0(I_DIR, "viral_integration/data/datasets/")
 CIDER_DIR = paste0(I_DIR, "cider/")
+META_DIR = paste0(I_DIR, 'metadata/')
 
-### Output directory ###
+### Output directories ###
 TMP_DIR = paste0(I_DIR, "biomarkers/database/")
 SV_DIR = paste0(TMP_DIR, "structural_variants/")
 READY_DIR = paste0(I_DIR, "biomarkers/ready/")
-
 SHARE_DIR = paste0(I_DIR, "biomarkers/share/")
+
+### Utility directories ### 
 REF_DIR= paste0(I_DIR, "biomarkers/ref/")
-UTIL_DIR="/mnt/bioinfnas/immunocomp/jusset/biomarkers/util/tmp/" 
 HELP_DIR="/home/josephusset@vhio.org/biomarkers/helpers/"
 FIG_DIR="/home/josephusset@vhio.org/biomarkers/util/figs/"
-
-ac <- function(i) as.character(i)
 
 ### File path mapper for samples
 get_fp <- function(i, type = "purity"){

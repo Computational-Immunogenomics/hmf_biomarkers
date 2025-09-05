@@ -1,7 +1,7 @@
 import os
 aqui = os.getcwd()
 
-steps = ['0_curate_clinical/', '1_create_database/', '2_prep_dna/', '3_prep_rna/']
+steps = ['0_clinical/', '1_database/', '2_biomarkers/', '3_signals/0_analysis/', '3_signals/1_figures/']
 
 for i in steps:
     print("Go! " + i)

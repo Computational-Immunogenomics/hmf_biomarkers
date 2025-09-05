@@ -1,5 +1,16 @@
-Rscript 0_prep_isofox.r
-##Rscript 1_insta_mp.r
-##Rscript 2_insta_sets.r
-Rscript prep_rna_vaf.r
-Rscript prep_rna_vaf_based_references.r
+Rscript prep_chord.r; echo "go chord"
+Rscript prep_cider.r; echo "go cider"
+Rscript prep_cn.r; echo "go cn"
+Rscript prep_drivers.r; echo "go drivers"
+Rscript prep_external.r; echo "add external"
+Rscript prep_fusions.r; echo "go fusions"
+Rscript prep_gie.r; "go gie"
+Rscript prep_hotspot.r; "go hotspot"
+Rscript prep_isofox.r; "go isofox"
+Rscript prep_lilac.r; "go lilac"
+Rscript prep_neo.r; "go neo"
+Rscript prep_purity.r; "go purity"
+Rscript prep_sv.r; "go sv"
+Rscript prep_teal.r; "go teal"
+Rscript prep_viral.r; "go viral"
+Rscript together.r; "go together"

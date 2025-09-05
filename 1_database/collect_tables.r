@@ -137,12 +137,19 @@ for( i in neo_patients ){
 
 fwrite( do.call("rbind", tmp), paste0(TMP_DIR, "neo.csv"))
 
+lr_threshold <- .001
+score_threshold <- 5
+
+#reader( i_file, sample = i ) %>% fi(Rank < .001)
+
 tmp <- list(); 
 system.time(
-for( i in neo_patients ){
+for( i in neo_patients[4273:5910] ){
   i_file <- get_fp(i, type = "neo_pep")
+  k <- k+1
+  if((k %% 200) == 0) {print(k); flush.console()}
   if(file.exists(i_file)){    
-      tmp[[i]] <- reader( i_file, sample = i ) %>% arrange(desc(Score)) %>% head(100)
+      tmp[[i]] <- reader( i_file, sample = i ) %>% fi(Score > score_threshold, lr_threshold < Rank)  
   }
 })
 

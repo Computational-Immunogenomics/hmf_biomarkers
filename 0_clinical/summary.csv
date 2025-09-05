@@ -1,0 +1,113 @@
+primaryTumorLocation,cohort,acronym,ct,tot
+Breast,ER+/HER- Breast Carcinoma,ER+/HER-BC,680,1116
+Breast,Triple Negative Breast Carcinoma,TNBC,173,1116
+Breast,Unknown/Other Breast Carcinoma,BRCAUN,124,1116
+Breast,ER-/HER+ Breast Carcinoma,ER-/HER+BC,100,1116
+Breast,ER+/HER+ Breast Carcinoma,ER+HER+BC,39,1116
+Lung,Lung Adenocarcinoma,LUAD,590,940
+Lung,Lung Unknown/Other,LUOT,123,940
+Lung,Small Cell Lung Cancer,SCLC,77,940
+Lung,Lung Neuroendocrine,LNET,66,940
+Lung,Lung Squamous Cell Carcinoma,LUSC,65,940
+Lung,Lung Large Cell Carcinoma,LCLC,19,940
+Colon,Colorectal Adenocarcinoma,COREAD,814,839
+Colon,Colorectal Other,COOT,25,839
+Cancer of unknown primary (CUP),CUPPA unknown,CUP-NA,99,608
+Cancer of unknown primary (CUP),CUPPA predicted: Lung: Non-small cell: LUAD,CUP-LUAD,81,608
+Cancer of unknown primary (CUP),CUPPA predicted: HPB: Bile duct/Gallbladder,CUP-HPB,53,608
+Cancer of unknown primary (CUP),CUPPA predicted: Colorectum/Small intestine/Appendix,CUP-CSA,40,608
+Cancer of unknown primary (CUP),CUPPA predicted: HPB: Pancreas,CUP-HPB,38,608
+Cancer of unknown primary (CUP),CUPPA predicted: Esophagus/Stomach,CUP-ES,33,608
+Cancer of unknown primary (CUP),CUPPA predicted: Anogenital,CUP-ANG,22,608
+Cancer of unknown primary (CUP),CUPPA predicted: Bone/Soft tissue: Other,CUP-BST,21,608
+Cancer of unknown primary (CUP),CUPPA predicted: Gynecologic: Ovary/Fallopian tube,CUP-GYN,21,608
+Cancer of unknown primary (CUP),CUPPA predicted: Skin: Melanoma,CUP-SKCM,18,608
+Cancer of unknown primary (CUP),CUPPA predicted: NET: Pancreas,CUP-PANET,17,608
+Cancer of unknown primary (CUP),CUPPA predicted: Urothelial tract,CUP-UT,13,608
+Cancer of unknown primary (CUP),CUPPA predicted: Head and neck: Other,CUP-HNSC,12,608
+Cancer of unknown primary (CUP),CUPPA predicted: Kidney: Other,CUP-RCOT,12,608
+Cancer of unknown primary (CUP),CUPPA predicted: Lung: Small cell,CUP-SCLC,12,608
+Cancer of unknown primary (CUP),CUPPA predicted: Breast: Other,CUP-BRCAUN,11,608
+Cancer of unknown primary (CUP),CUPPA predicted: Skin: Other,CUP-SKOT,11,608
+Cancer of unknown primary (CUP),CUPPA predicted: Prostate,CUP-PRAD,10,608
+Cancer of unknown primary (CUP),CUPPA predicted: HPB: Liver,CUP-HPB,9,608
+Cancer of unknown primary (CUP),CUPPA predicted: NET: Colorectum/Small intestine,CUP-CSNET,9,608
+Cancer of unknown primary (CUP),CUPPA predicted: NET: Lung,CUP-LNET,9,608
+Cancer of unknown primary (CUP),CUPPA predicted: Breast: Triple negative,CUP-TNBC,8,608
+Cancer of unknown primary (CUP),CUPPA predicted: Gynecologic: Endometrium,CUP-GYNEND,8,608
+Cancer of unknown primary (CUP),CUPPA predicted: Lung: Non-small cell: LUSC,CUP-LUSC,8,608
+Cancer of unknown primary (CUP),CUPPA predicted: Mesothelium,CUP-MESO,6,608
+Cancer of unknown primary (CUP),CUPPA predicted: Bone/Soft tissue: Leiomyosarcoma,CUP-LEI,4,608
+Cancer of unknown primary (CUP),CUPPA predicted: CNS: Glioma,CUP-GLI,4,608
+Cancer of unknown primary (CUP),CUPPA predicted: Head and neck: Adenoid cystic,CUP-HNAC,4,608
+Cancer of unknown primary (CUP),CUPPA predicted: Bone/Soft tissue: Undiff. sarcoma,CUP-SARCUN,3,608
+Cancer of unknown primary (CUP),CUPPA predicted: Head and neck: Salivary gland,CUP-HNSG,3,608
+Cancer of unknown primary (CUP),CUPPA predicted: Lymphoid tissue,CUP-LYMPH,3,608
+Cancer of unknown primary (CUP),CUPPA predicted: CNS: Medulloblastoma,CUP-CNSMED,2,608
+Cancer of unknown primary (CUP),CUPPA predicted: Kidney: Chromophobe,CUP-RCCC,2,608
+Cancer of unknown primary (CUP),CUPPA predicted: Myeloid: Myeloproliferative neoplasm,CUP-MYL,1,608
+Cancer of unknown primary (CUP),CUPPA predicted: Thyroid gland,CUP-THCA,1,608
+Prostate,Prostate Adenocarcinoma,PRAD,548,548
+Soft tissue,Soft Tissue Sarcoma Unknown/Other,SARCOT,155,475
+Soft tissue,Gastrointestinal Stromal Tumor,GIST,82,475
+Soft tissue,Leiomyosarcoma,LEI,78,475
+Soft tissue,Liposarcoma,LIPO,53,475
+Soft tissue,Soft tissue Undifferentiated,SARCUN,51,475
+Soft tissue,Angiosarcoma,ANGS,15,475
+Soft tissue,Soft tissue Solitary Fibrous Tumor,SARCFT,15,475
+Soft tissue,Synovial Sarcoma,SYN,14,475
+Soft tissue,Myxofibrosarcoma,MYX,12,475
+Skin,Skin Melanoma,SKCM,316,384
+Skin,Skin Basal Cell Carcinoma,SKBC,25,384
+Skin,Skin Other,SKOT,17,384
+Skin,Skin Squamous Cell Carcinoma,SKSC,15,384
+Skin,Skin Merkel Cell Carcinoma,SKMC,11,384
+Ovary,Ovarian Adenocarcinoma,OV,302,302
+Pancreas,Pancreatic Adenocarcinoma,PAAD,175,223
+Pancreas,Pancreatic Neuroendocrine,PANET,36,223
+Pancreas,Pancreas Other,PAOT,12,223
+Brain/central nervous system,Glioblastoma Multiforme,GBM,154,217
+Brain/central nervous system,Brain/CNS Unknown/Other,BROT,37,217
+Brain/central nervous system,Pilocityc Astrocytoma,PIA,26,217
+Esophagus/gastroesophageal junction,Gastroesophageal Adenocarcinoma,ESCA,213,213
+Bladder,Urothelial Tract Bladder Adenocarcinoma,BLCA,169,184
+Bladder,Bladder Other,BLOT,15,184
+Kidney,Renal Clear Cell Carcinoma,RCCC,92,164
+Kidney,Renal (Unknown/Other),RCOT,72,164
+Rectum,Colorectal Adenocarcinoma,COREAD,145,155
+Rectum,Colorectal Other,COOT,10,155
+Biliary tract,Biliary Tract Adenocarcinoma,CHOL,111,111
+Cervix,Cervix Carcinoma,CESC,85,85
+Small bowel/intestine,Small Bowel Cancer,SBC,85,85
+Endometrium/uterus,Endometrium Cancer,EC,84,84
+Unspecified,Unspecified,NOS,83,83
+Stomach,Stomach Adenocarcinoma,STAD,68,68
+Pleura,Mesothelioma,MESO,60,60
+Liver,Hepatocellular Carcinoma,HCC,57,57
+Ureter/renal pelvis,Urothelial Tract Non-Bladder Adenocarcinoma,UTNBC,46,46
+Anus,Anal Carcinoma,ANCA,41,41
+Thyroid gland,Thyroid Adenocarcinoma,THCA,34,34
+Lymphoid,Lymphoma,LYMPH,26,26
+Salivary gland,Salivary Gland Carcinoma,SGCA,26,26
+Gallbladder,Gallblader Adenocarcinoma,GACA,25,25
+Appendix,Appendix Carcinoma,APCA,24,24
+Bone,Bone Sarcoma,OS,21,21
+Thymus,Thymic Carcinoma,TYCA,20,20
+Penis,Penile Cancer,PNCA,18,18
+Vulva,Vulva/Vaginal Squamous Cell Carcinoma,VVSC,17,17
+Oral cavity/tongue,Head And Neck Squamous Cell Carcinoma,HNSC,15,15
+Urethra,Urothelial Tract Non-Bladder Adenocarcinoma,UTNBC,13,13
+Adrenal gland,Adrenal Gland Carcinoma,AACA,12,12
+Nasal cavity,Head And Neck Squamous Cell Carcinoma,HNSC,12,12
+Oropharynx,Head And Neck Squamous Cell Carcinoma,HNSC,11,11
+Testis,Testicular Cancer,TTCA,10,10
+Urachus,Urothelial Tract Non-Bladder Adenocarcinoma,UTNBC,10,10
+Nasopharynx,Head And Neck Squamous Cell Carcinoma,HNSC,9,9
+Vagina,Vulva/Vaginal Squamous Cell Carcinoma,VVSC,8,8
+Eye,Uveal Melanoma,UVM,7,7
+Paranasal sinuses,Head And Neck Squamous Cell Carcinoma,HNSC,5,5
+Peritoneum,Mesothelioma,MESO,5,5
+Ampulla of Vater,Ampullary Cancer,AC,4,4
+Hypopharynx,Head And Neck Squamous Cell Carcinoma,HNSC,4,4
+Larynx,Head And Neck Squamous Cell Carcinoma,HNSC,4,4
+Bone marrow/myeloid,Myeloid Cancer,MC,3,3

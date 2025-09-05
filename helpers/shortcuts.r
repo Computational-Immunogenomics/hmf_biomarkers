@@ -35,6 +35,7 @@ ds <- function(w = 10, h = 6){
   options(repr.plot.width = w, repr.plot.height = h)
 } 
 df <- data.frame
+ac <- function(i) as.character(i)
 
 top <- function(data, group_col) {
   data %>%

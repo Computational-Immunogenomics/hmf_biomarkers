@@ -22,13 +22,11 @@ sys.path.insert(0, f'{os.path.dirname(os.getcwd())}')
 
 
 from map import I_DIR, SOMATIC_DIR, O_DIR
-#SOMATIC_DIR = I_DIR + 'somatics/'
-#O_DIR = I_DIR + 'biomarkers/database/'
 
 
 # ### Helper Functions 
 
-# In[5]:
+# In[4]:
 
 
 ### Functions to Read VCF file ###
@@ -131,7 +129,7 @@ def vamos(sampleId: str) -> pd.DataFrame:
 
 # ### Get file paths 
 
-# In[6]:
+# In[5]:
 
 
 files = os.listdir(SOMATIC_DIR)
@@ -140,7 +138,7 @@ run_files = [i for i in files if "." not in i]
 
 # ### Run and save output
 
-# In[7]:
+# In[6]:
 
 
 chunk_size = 702
