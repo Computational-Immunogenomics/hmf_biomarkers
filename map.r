@@ -1,6 +1,7 @@
 
 ### Specify input directories for the Hartwig data ###
-I_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/"
+#I_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/"
+I_DIR = "/mnt/immunocompnas1/datasets/hartwig/"
 SOM_DIR = paste0(I_DIR, "somatics/")
 ISOFOX_DIR = paste0(I_DIR, "isofox/data_isofox/")
 LILAC_DIR = paste0(I_DIR, "lilac/lilac_out/")
@@ -14,9 +15,8 @@ TMP_DIR = paste0(I_DIR, "biomarkers/database/")
 SV_DIR = paste0(TMP_DIR, "structural_variants/")
 READY_DIR = paste0(I_DIR, "biomarkers/ready/")
 
-SHARE_DIR = "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/share/"
-REF_DIR= "/mnt/petasan_immunocomp/datasets/hartwig/biomarkers/ref/"
-INST_DIR="/mnt/bioinfnas2/immunocomp/manuel/tme/metaPrograms/deconvolution_output_merged/"
+SHARE_DIR = paste0(I_DIR, "biomarkers/share/")
+REF_DIR= paste0(I_DIR, "biomarkers/ref/")
 UTIL_DIR="/mnt/bioinfnas/immunocomp/jusset/biomarkers/util/tmp/" 
 HELP_DIR="/home/josephusset@vhio.org/biomarkers/helpers/"
 FIG_DIR="/home/josephusset@vhio.org/biomarkers/util/figs/"
