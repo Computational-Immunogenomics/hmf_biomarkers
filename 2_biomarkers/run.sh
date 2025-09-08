@@ -1,16 +1,17 @@
-Rscript prep_chord.r; echo "go chord"
-Rscript prep_cider.r; echo "go cider"
-Rscript prep_cn.r; echo "go cn"
-Rscript prep_drivers.r; echo "go drivers"
-Rscript prep_external.r; echo "add external"
-Rscript prep_fusions.r; echo "go fusions"
-Rscript prep_gie.r; "go gie"
-Rscript prep_hotspot.r; "go hotspot"
-Rscript prep_isofox.r; "go isofox"
-Rscript prep_lilac.r; "go lilac"
-Rscript prep_neo.r; "go neo"
-Rscript prep_purity.r; "go purity"
-Rscript prep_sv.r; "go sv"
-Rscript prep_teal.r; "go teal"
-Rscript prep_viral.r; "go viral"
-Rscript together.r; "go together"
+jupyter nbconvert --to script *.ipynb
+echo "go chord"; Rscript prep_chord.r
+echo "go cider"; Rscript prep_cider.r
+echo "go cn"; Rscript prep_cn.r
+echo "go drivers"; Rscript prep_drivers.r
+echo "add external"; Rscript prep_external.r
+echo "go fusions"; Rscript prep_fusions.r
+echo "go gie"; Rscript prep_gie.r
+echo "go hotspot"; Rscript prep_hotspot.r
+echo "go isofox"; Rscript prep_isofox.r
+echo "go lilac"; Rscript prep_lilac.r
+echo "go neo"; Rscript prep_neo.r
+echo "go purity"; Rscript prep_purity.r
+echo "go sv"; Rscript prep_sv.r
+echo "go teal"; Rscript prep_teal.r
+echo "go viral"; Rscript prep_viral.r
+echo "go together"; Rscript together.r

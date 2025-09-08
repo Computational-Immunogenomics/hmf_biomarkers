@@ -29,6 +29,10 @@ for( i in sources){
   dfs[[i]] <- fread( paste0(i, "_ready.csv"))
 })
 
+for( i in names(df)) {
+    print(i); print(dim(dfs[[i]]))
+}
+
 ready <- 
  dfs %>% 
  reduce(left_join, by = "sampleId") %>%

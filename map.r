@@ -14,11 +14,12 @@ TMP_DIR = paste0(I_DIR, "biomarkers/database/")
 SV_DIR = paste0(TMP_DIR, "structural_variants/")
 READY_DIR = paste0(I_DIR, "biomarkers/ready/")
 SHARE_DIR = paste0(I_DIR, "biomarkers/share/")
+FIG_DIR = paste0(I_DIR, "biomarkers/figs/")
 
 ### Utility directories ### 
 REF_DIR= paste0(I_DIR, "biomarkers/ref/")
 HELP_DIR="/home/josephusset@vhio.org/biomarkers/helpers/"
-FIG_DIR="/home/josephusset@vhio.org/biomarkers/util/figs/"
+# FIG_DIR="/home/josephusset@vhio.org/biomarkers/util/figs/"
 
 ### File path mapper for samples
 get_fp <- function(i, type = "purity"){

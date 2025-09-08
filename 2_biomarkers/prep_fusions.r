@@ -26,6 +26,4 @@ total_fusions %>%
  rename_with(~paste0("fusion_", .), .cols = -sampleId) %>% 
  mutate(across(everything(),~replace_na(., 0)))
 
-head(fusions_ready)
-
 fwrite(fusions_ready, paste0( READY_DIR, "fusions_dna_ready.csv"))
