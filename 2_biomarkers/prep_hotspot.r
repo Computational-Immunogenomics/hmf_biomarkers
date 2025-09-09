@@ -11,10 +11,12 @@ hot <-
 somatic %>% 
  fi(annotation != "synonymous_variant") %>% 
  gb(gene, annotation, chromosome, REF, ALT, position) %>% 
- su(ct = n()) %>% fi( ct >= threshold/5 ) %>% 
+ su(ct = n()) %>% fi( ct >= threshold ) %>% 
  gb(annotation) %>% mu(rk = row_number(desc(ct))) %>% 
  fi((!annotation %in% non_coding) | (annotation %in% non_coding & rk <= 20)) %>% 
  ug()
+
+hot %>% fi(gene == "KRAS")
 
 names_map <- 
 c("hotspot_KRAS_missense_variant_chr12_refC_altT_pos25398284" = "hotspot_KRAS_G12D",

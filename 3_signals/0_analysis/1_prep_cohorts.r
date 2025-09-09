@@ -3,7 +3,7 @@ source(paste0(HELP_DIR, "shortcuts.r"))
 source(paste0(HELP_DIR, "helpers.r"))
 source(paste0(HELP_DIR, "fisher.r"))
 
-ready <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.Rds"))$ready 
+ready <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.rds"))$ready 
 
 cohorts <- 
 fread("/mnt/bioinfnas2/immunocomp/shared_reference_data/cohorts/cohorts_ready.csv") %>% 
@@ -71,6 +71,8 @@ go %>%
  su(ct = n(), no_dcb = sum(non_response), dcb = ct - no_dcb) %>% 
  fi(ct > min_patients, no_dcb >= min_response, dcb >= min_response) %>% 
  ug()
+
+top_mechanisms %>% gb(group, grepl("Pan-Cancer", cohortGo)) %>% su(ct = n())
 
 print("Summaries of cohort sizes overall")
 top_mechanisms %>% su(mean(ct), mean(no_dcb), median(ct), median(no_dcb), min(ct), max(ct))

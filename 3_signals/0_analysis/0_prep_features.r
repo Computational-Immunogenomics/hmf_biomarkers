@@ -16,7 +16,8 @@ all %>%
     -contains("sv_"),
     -contains("_pos10_"),
     -contains("_pos30_"), 
-    -contains("vhio")); dim(ready)
+    -contains("vhio"),
+    -drivers_immune_evasion); dim(ready)
 
 fwrite( ready %>% se(derived_treatmentName, derived_treatmentMechanism) %>% unique(), paste0(SHARE_DIR, "treatment_mechanism_map.csv"))
 
@@ -119,8 +120,7 @@ data.frame(
    "nas" = apply(is.na(rest %>% se(any_of(base_features))), 2, sum, na.rm = TRUE), 
    "non_nas" = apply(!is.na(rest %>% se(any_of(base_features))), 2, sum, na.rm = TRUE)) %>% 
  mu(pct_zeros = zeros/(zeros+non_zeros), pct_nas = nas/(nas+non_nas)) %>%
- rownames_to_column("feature") %>% 
- fi( pct_zeros < .98, non_nas > 100 )
+ rownames_to_column("feature") 
 
 binary_features <- 
 rest %>% 
@@ -131,6 +131,8 @@ non_binary_non_sparse_features <-
 rest %>% 
  se(all_of(filter_ref %>% fi(pct_zeros <= .5) %>% pu(feature))) %>% 
  se(!where(~all(. %in% c(0, 1, NA)))) 
+
+#non_binary_non_sparse_features
 
 non_binary_sparse_features <- 
 rest %>% 
@@ -190,9 +192,7 @@ cbind(binary_features,
       sparse_lt, 
       pathways_affected, 
       cn_dels, 
-      cn_no_dels, 
       cn_amps, 
-      cn_no_amps, 
       tmb_features, 
       msi_features,
       viral_features) %>%
@@ -205,13 +205,15 @@ cbind( ready %>% se(-contains(base_features), purity),  prepared_features) %>%
      collapse = " ## ")) %>% 
   ug()
 
-saveRDS( list("ready" = go, "features" = names(prepared_features)), paste0(SHARE_DIR, "biomarkers_ready.Rds"))
+saveRDS( list("ready" = go, "features" = names(prepared_features)), paste0(SHARE_DIR, "biomarkers_ready.rds"))
 
 print("Total Base Features")
 print(length(base_features))
 
 print("Base Features Counts")
 table(unlist(lapply(base_features, function(i) strsplit(i, "_")[[1]][1])))
+
+#prepared_features %>% se(contains("cider"))
 
 print("Derived Features counts")
 table(unlist(lapply(names(prepared_features), function(i) strsplit(i, "_")[[1]][1])))

@@ -1,4 +1,4 @@
-source(paste0(dirname(dirname(dirname(getwd()))),'/map.r'))
+source(paste0(dirname(dirname(getwd())),'/map.r'))
 source(paste0(HELP_DIR, "shortcuts.r"))
 source(paste0(HELP_DIR, "helpers.r"))
 source(paste0(HELP_DIR, "names.r"))
@@ -15,16 +15,11 @@ fread(paste0(SHARE_DIR, "treatment_mechanism_map.csv")) %>%
 low_responder_threshold <- .05
 pval_threshold <- .1
 
-orderer <- 
-c('Anti-PD-1',
-  'Immunotherapy',
-  'Chemotherapy',
-  'Anti-AR',
-  ' ')
+orderer <- c('Anti-PD-1','Immunotherapy','Chemotherapy','Anti-AR',' ')
 
 lets_go <- 
 base %>% 
- fi(total_patients >= 30, events >= 6, non_responders >= 15, responders >= 15, surv_se <= 5) %>% 
+ fi(total_patients >= 30, non_responders >= 15, responders >= 15, events >= 8) %>% 
  mu(p_fdr_fisher = p.adjust(fisher_pval, method = "fdr"), 
     p_fdr_fisher_by = p.adjust(fisher_pval, method = "BY"),
     p_fdr_surv = p.adjust(surv_pval, method = "fdr"),
@@ -40,6 +35,7 @@ base %>%
     dark_highlight = ((highlight_fisher ) & (highlight_pfs)),
     Odds = ifelse(direction == "Response", "Better", "Worse"),
     pan = grepl("Pan-Cancer", cohortGo)) %>% 
+  fi(surv_se <= 10) %>% 
   rw() %>% mu( derived_treatmentName = str_split_fixed( cohortGo	, " / ", n = 2)[2]) %>% ug() %>% 
   lj( cohorts %>% se(cohortGo, group), by = "cohortGo" ) %>% 
   lj( treatment_mechanism_map , by = "derived_treatmentName") %>% 
@@ -60,8 +56,8 @@ base %>%
 
 tmp <- 
 lets_go %>% 
- fi(highlight_fisher | highlight_pfs | (grepl("driver", feature) & light_highlight) | (grepl("driver", feature) & light_highlight)) %>% 
- fi( !((cohortGo == "Skin Melanoma / Anti-PD-1") & (feature == "drivers_pathway_IMMUNE_EVASION_gt0"))) %>%
+ fi(highlight_fisher | highlight_pfs | (grepl("driver", feature) & light_highlight)) %>% 
+ fi( !((cohortGo == "Skin Melanoma / Anti-PD-1") & (feature %in% c("drivers_pathway_IMMUNE_EVASION_gt0", "drivers_immune_evasion_gt0")))) %>%
  gb(cohortGo) %>%
  mu(rk = row_number(desc(e_nr))) %>%
  tm(cohortGo, feature, fisher_pval, surv_pval, e_nr, e_r, select_example = TRUE, rk) %>% 
@@ -69,14 +65,20 @@ lets_go %>%
 
 remove_examples <- c("signature_log_ID2_gt75", "lilac_hla_cn_B44_gt0", "rna_geneset_KEGG_CYSTEINE_AND_METHIONINE_METABOLISM_gt75")
 
-examples_base <- tmp %>% fi(rk == 1, !feature %in% remove_examples) %>% tm(cohortGo, feature, selected_example = TRUE)
+examples_base <- tmp %>% fi(rk <= 1, !feature %in% remove_examples) %>% tm(cohortGo, feature, selected_example = TRUE, rk)
 
 examples <- 
 examples_base %>%
-bind_rows(
-lets_go %>% 
- fi(cohortGo == "Prostate / Anti-AR", feature == "rna_geneset_KEGG_TGF_BETA_SIGNALING_PATHWAY_gt50") %>%
- tm(cohortGo, feature, selected_example = TRUE))
+ bind_rows(
+ lets_go %>% 
+  fi(cohortGo == "Prostate / Anti-AR", feature == "rna_geneset_KEGG_TGF_BETA_SIGNALING_PATHWAY_gt50") %>% 
+   tm(cohortGo, feature, selected_example = TRUE) 
+ ) %>% 
+ bind_rows(
+ lets_go %>% 
+  fi(cohortGo == "Colorectum / Chemotherapy", feature == "hotspot_KRAS_G12D") %>% 
+   tm(cohortGo, feature, selected_example = TRUE) 
+ )
 
 lets_go_with_examples <- lets_go %>% lj(examples, by = c("cohortGo", "feature"))
 
@@ -123,7 +125,8 @@ c("_" = " ",
   "lt50" = "Low",
   "lt25" = "Very Low",
   "purity tmbStatus" = "TMB",
-  "hotspot KRAS position 25398284" = "KRAS G12D hotspot",
+  "hotspot_KRAS_G12D" = "KRAS G12D hotspot",
+  "hotspot_KRAS_G12" = "KRAS G12(D/V/A/C/G) hotspot",
   "purity tmbPerMb lt6" = "TMB per MB < 6",
   "purity tmbPerMb lt8" = "TMB per MB < 8",
   "neo ct" = "RNA Neoantigens",
@@ -143,4 +146,4 @@ c("_" = " ",
   "CD 8" = "CD8", 
   "BASAL CELL CARCINOMA" = "Basal Cell")
 
-saveRDS(share, paste0(SHARE_DIR, "3_ready.Rds"))
+saveRDS(share, paste0(SHARE_DIR, "3_ready.rds"))

@@ -5,7 +5,7 @@ source(paste0(HELP_DIR, "fisher.r"))
 
 go <- fread(paste0(SHARE_DIR, "fisher_base.csv"))
 cohorts <- fread(paste0(SHARE_DIR, "top_mechanisms.csv"))
-categorical_features <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.Rds"))$features
+categorical_features <- readRDS(paste0(SHARE_DIR, "biomarkers_ready.rds"))$features
 
 treatment_mechanism_map <- 
 fread(paste0(SHARE_DIR, "treatment_mechanism_map.csv")) %>% 
@@ -21,6 +21,8 @@ print("Run fisher's exact tests")
 system.time(
  ra_go <- ra_formatter_and_test(ra_ready)
 )
+
+scanner_non_responders
 
 print("Add PFS survival analyses")
 oo_survival <- data.frame()

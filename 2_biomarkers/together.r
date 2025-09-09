@@ -4,8 +4,8 @@ source(paste0(HELP_DIR, "shortcuts.r"))
 setwd(READY_DIR)
 
 sources <- 
-c("clinical", 
-  "purity", 
+c("purity",
+  "clinical",
   "drivers", 
   "cn_simple",
   "isofox_genesets",
@@ -28,10 +28,6 @@ for( i in sources){
   print(i); flush.console()
   dfs[[i]] <- fread( paste0(i, "_ready.csv"))
 })
-
-for( i in names(df)) {
-    print(i); print(dim(dfs[[i]]))
-}
 
 ready <- 
  dfs %>% 
