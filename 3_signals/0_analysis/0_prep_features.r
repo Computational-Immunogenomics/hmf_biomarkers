@@ -9,15 +9,7 @@ ready <-
 all %>% 
  fi(!is.na(purity), !is.na(durableClinicalBenefit)) %>% 
  mu(non_response = abs(durableClinicalBenefit-1)) %>%
- se(-contains("geneset_mp_"),
-    -contains("rand1"), 
-    -contains("battle"), 
-    -contains("metaprogram"),
-    -contains("sv_"),
-    -contains("_pos10_"),
-    -contains("_pos30_"), 
-    -contains("vhio"),
-    -drivers_immune_evasion); dim(ready)
+ se(-contains("sv_")); dim(ready)
 
 fwrite( ready %>% se(derived_treatmentName, derived_treatmentMechanism) %>% unique(), paste0(SHARE_DIR, "treatment_mechanism_map.csv"))
 
@@ -45,13 +37,13 @@ cn_no_dels <- cn_ploidy_features %>% mu(across(everything(), ~ (. > .7))) %>% re
 cn_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. >= 1.3))) %>% rename_with(~ paste0(.x, "_amp"))
 cn_no_amps <- cn_ploidy_features %>% mu(across(everything(), ~ (. < 1.3))) %>% rename_with(~ paste0(.x, "_no_amp"))
 
-tmb_msi_viral <- 
+tmb_msi <- 
 data.frame(
     exp(ready %>% se(contains("PerMb"))-1), 
-        ready %>% se(purity_msStatus, purity_tmbStatus, purity_tmlStatus, chord_hrStatus, viral_HPV))
+        ready %>% se(purity_msStatus, purity_tmbStatus, purity_tmlStatus, chord_hrStatus))
 
 tmb_features <- 
-tmb_msi_viral %>% 
+tmb_msi %>% 
  mu( purity_tmbPerMb_gt2 = (purity_tmbPerMb > 2),
      purity_tmbPerMb_gt4 = (purity_tmbPerMb > 4),
      purity_tmbPerMb_gt6 = (purity_tmbPerMb > 6),
@@ -72,7 +64,7 @@ tmb_msi_viral %>%
  se(contains("purity_tmbPerMb_"), contains("Status_"))
 
 msi_features <- 
-tmb_msi_viral %>% 
+tmb_msi %>% 
   mu(purity_msIndelsPerMb_gt1 = (purity_msIndelsPerMb > 1),
      purity_msIndelsPerMb_gt2 = (purity_msIndelsPerMb > 2),
      purity_msIndelsPerMb_lt1 = (purity_msIndelsPerMb < 1),
@@ -81,11 +73,6 @@ tmb_msi_viral %>%
      purity_msStatus_low = 1 - purity_msStatus, 
    ) %>% 
  se(contains("purity_msIndelsPerMb_"), contains("Status_"))
-
-viral_features <- 
-tmb_msi_viral %>% 
- mu( viral_HPV_yes = viral_HPV, viral_HPV_no = 1 - viral_HPV) %>% 
- se( contains("viral_HPV_") )
 
 pathways_affected <- 
  ready %>% 
@@ -107,7 +94,6 @@ rest <-
       -purity_tmbStatus, 
       -purity_tmlStatus, 
       -chord_hrStatus, 
-      -viral_HPV, 
       -drivers_pathway_total, 
       -contains("PerMb") )
 
@@ -131,8 +117,6 @@ non_binary_non_sparse_features <-
 rest %>% 
  se(all_of(filter_ref %>% fi(pct_zeros <= .5) %>% pu(feature))) %>% 
  se(!where(~all(. %in% c(0, 1, NA)))) 
-
-#non_binary_non_sparse_features
 
 non_binary_sparse_features <- 
 rest %>% 
@@ -194,9 +178,9 @@ cbind(binary_features,
       cn_dels, 
       cn_amps, 
       tmb_features, 
-      msi_features,
-      viral_features) %>%
-  mutate(across(where(is.logical), as.integer))
+      msi_features) %>%
+  mutate(across(where(is.logical), as.integer)) %>% 
+  select(where(~is.numeric(.) && sum(., na.rm = TRUE) >= 5))
 
 go <- 
 cbind( ready %>% se(-contains(base_features), purity),  prepared_features) %>% 
@@ -212,8 +196,6 @@ print(length(base_features))
 
 print("Base Features Counts")
 table(unlist(lapply(base_features, function(i) strsplit(i, "_")[[1]][1])))
-
-#prepared_features %>% se(contains("cider"))
 
 print("Derived Features counts")
 table(unlist(lapply(names(prepared_features), function(i) strsplit(i, "_")[[1]][1])))

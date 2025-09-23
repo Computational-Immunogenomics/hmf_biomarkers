@@ -60,7 +60,7 @@ theme_minimal() +
     axis.title.x = element_text(hjust = .5, size = 14)) 
 
 no_y <- theme(axis.text.y = element_blank())
-scale_x_event <- scale_x_continuous(expand = expansion(mult = c(0.05, 0.2)), breaks = c(0,25, 50), limits = c(0,60))
+scale_x_event <- scale_x_continuous(expand = expansion(mult = c(0.05, 0.2)), breaks = c(0,25, 50), limits = c(0,63))
 
 alphas <- c("FALSE" = .6, "TRUE" = .8)
 colors <- c("FALSE" = "black", "TRUE" = "black")
@@ -106,7 +106,7 @@ go %>%
   geom_point() +                              # points for estimates
   geom_errorbarh(aes(xmin = ci_low, xmax = ci_high), height = 0.2) +  # horizontal error bars for CI
   geom_vline(xintercept = 1, linetype = "dashed", color = "grey") +      # reference line (e.g., OR=1)
-  xlab("Odds Ratio DCB") +
+  xlab("Odds Ratio Response") +
   ylab("") +
   ggtitle("Odds Ratio 95% CI") + 
   settings_stuff + scale_x_continuous( breaks = c(0,1,2), limits = c(0,2)) + 
@@ -143,5 +143,7 @@ plot_annotation(
       plot.caption = element_text(size = 10, face = "italic")
     )
   )
+
+share
 
 ggsave(paste0(FIG_DIR, "highlights.png"), share, width = 16, height = 7.5)

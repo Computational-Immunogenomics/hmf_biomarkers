@@ -21,8 +21,9 @@ base %>%
  sp(name, fusion)
 
 fusions_ready <- 
-total_fusions %>% 
- lj(top_fusions, by = "sampleId") %>% 
+#total_fusions %>% 
+# lj(top_fusions, by = "sampleId") %>% 
+top_fusions %>% 
  rename_with(~paste0("fusion_", .), .cols = -sampleId) %>% 
  mutate(across(everything(),~replace_na(., 0)))
 

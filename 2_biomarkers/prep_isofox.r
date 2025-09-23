@@ -8,30 +8,8 @@ iso <- fread(paste0(TMP_DIR, "isofox_adj_tmp.csv"))
 
 iso_base <- log(data.frame(t(iso %>% select(-GeneId) %>% column_to_rownames("GeneName"))) + 1)
 
-mrp_genes <- c("ABCC1", "ABCC2", "ABCC3", "ABCC4", "ABCC5", "ABCC6", "ABCC10", "ABCC11", "ABCC12")
-more_markers <- c("ESR1", "ERBB2", "CD274", "MGMT", "BRCA1", "BRCA2", "EGFR", "ALK", "BCL2", "AR", "TOP2A", "TYMS", "ERCC1", "MET", "KRAS")
-marker_genes <- c(mrp_genes, more_markers)
-
-biomarker_genes <-
-iso_base %>% 
- se(any_of(marker_genes)) %>% 
- rownames_to_column("sampleId")
-
-colnames(biomarker_genes) <- c("sampleId", paste0("rna_marker_", colnames(biomarker_genes)[-1]))
-
-fwrite( biomarker_genes, paste0(READY_DIR, "biomarker_genes_ready.csv"))
-
 gene_sets <- readRDS(paste0(REF_DIR, 'gene_sets.Rds'))
-
-cell_types <- c("B_cells", "Endothelial", "Epithelial", "Fibroblasts", "Macrophages","CD4", "CD8", "Malignant")
-
-mps <- list()
-for(i in cell_types){
-    tmp <- read_excel(paste0(REF_DIR, "/41586_2023_6130_MOESM14_ESM.xlsx"), sheet = i)
-    names(tmp) <- paste0("mp_", i, "_", names(tmp))
-    gene_sets <- c(gene_sets, as.list(tmp))
-}
-saveRDS(gene_sets, paste0(REF_DIR, 'gene_sets_full.Rds'))
+gene_sets <- gene_sets[-grep("gene_set|vhio|battle|rand|character", names(gene_sets))]
 
 computer <- function( i, df ) {
   tmp <- data.frame( apply(df %>% select(any_of(gene_sets[[i]])),1,mean) )

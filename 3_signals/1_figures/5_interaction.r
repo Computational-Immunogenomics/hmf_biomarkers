@@ -59,8 +59,6 @@ base %>%
 options(repr.plot.width = 8, repr.plot.height = 6)
 highlight_interaction_figure
 
-fisher_base <- fread(paste0(SHARE_DIR, "fisher_base.csv"))
-
 cohort_select <- "Pan-Cancer / Immunotherapy"
 
 interaction_base <- 
@@ -75,6 +73,14 @@ base %>%
            FALSE), 
     `PFS Significant` = (p_fdr_surv < .1), 
     Treatment = ifelse(focus, mechanism, "Other"))
+
+base %>% fi(grepl("KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY", feature), cohortGo == cohort_select)
+
+interaction_base %>% 
+ fi(cohortGo == cohort_select, focus, !grepl("GRAFT", feature),
+    feature != "rna_geneset_gene_set_cd8_t_effector_lt50", 
+    !grepl("GRAFT", feature), 
+    !((grepl("lt25", feature) | grepl("lt75", feature)) & grepl("rna", feature)))
 
 highlight_features <- 
 interaction_base %>% 
@@ -141,10 +147,10 @@ ggcorrplot(cor_base,
            tl.cex = 8, 
            hc.order = TRUE) + 
  scale_x_discrete(guide = guide_axis(n.dodge = 5, check.overlap = TRUE)) + 
- theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5), legend.position = "none") +
+ theme(axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5), axis.text = element_text(size = 16),  legend.position = "none") +
  ggtitle("Correlation of Highly Significant Features")
 
-options(repr.plot.width = 6, repr.plot.height = 6)
+options(repr.plot.width = 4, repr.plot.height = 4)
 correlations
 
 pfs_base <-
@@ -200,12 +206,12 @@ oo$plot +
 pfs_plot <- oo$plot
 
 los_tres <- (highlight_interaction_figure + theme(legend.position = "none") | 
-             correlations + theme(plot.margin = margin(0, 2, 0,0, unit = "cm")) | 
+             correlations + theme(plot.margin = margin(0, 2, 0,0, unit = "cm"), axis.text = element_text(size = 40)) | 
              pfs_plot) + plot_layout(widths = c(1, 1, 1))
 
 los_dos <- (highlight_interaction_figure | correlations ) + plot_layout(widths = c(1, 1))
 
-options(repr.plot.width = 19, repr.plot.height = 7)
+options(repr.plot.width = 16, repr.plot.height = 6onda )
 share <- 
 los_tres  + 
 plot_annotation(

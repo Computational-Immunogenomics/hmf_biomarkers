@@ -102,6 +102,4 @@ plot_annotation(
     )
   )
 
-share
-
 ggsave(paste0(FIG_DIR,"minimum_sample_size.png"), plot = share, width = 14, height = 6.5)

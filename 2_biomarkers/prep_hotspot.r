@@ -16,8 +16,6 @@ somatic %>%
  fi((!annotation %in% non_coding) | (annotation %in% non_coding & rk <= 20)) %>% 
  ug()
 
-hot %>% fi(gene == "KRAS")
-
 names_map <- 
 c("hotspot_KRAS_missense_variant_chr12_refC_altT_pos25398284" = "hotspot_KRAS_G12D",
   "hotspot_KRAS_missense_variant_chr12_refC_altA_pos25398284" = "hotspot_KRAS_G12V",

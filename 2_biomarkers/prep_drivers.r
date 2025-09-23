@@ -59,19 +59,17 @@ drivers %>%
  ug() %>% 
  tm(sampleId, pathway = paste0("drivers_pathway_", pathway), tot) %>% 
  unique() %>% 
- spread(pathway, tot)
-
-pathways_ready[is.na(pathways_ready)] <- 0
+ spread(pathway, tot) %>% 
+ mu(across(-sampleId, ~ ifelse(. > 0, 1, 0))) %>%
+ mu(across(everything(), ~ ifelse(is.na(.), 0, .)))
 
 total_drivers <- drivers %>% gb(sampleId) %>% su(drivers_total = n()) 
 total_pathways <- drivers %>% gb(sampleId) %>% su(drivers_pathway_total = n_distinct(pathway))
-total_immune_evasion <- drivers %>% gb(sampleId) %>% su(drivers_immune_evasion = sum(pathway == "IMMUNE_EVASION"))
 
 together <- 
 drivers_ready %>% 
  ij(pathways_ready, by = "sampleId") %>% 
  ij(total_drivers, by = "sampleId") %>% 
- ij(total_pathways, by = "sampleId") %>% 
- ij(total_immune_evasion, by = "sampleId")
+ ij(total_pathways, by = "sampleId") 
 
 fwrite(together, paste0(READY_DIR, "drivers_ready.csv"))

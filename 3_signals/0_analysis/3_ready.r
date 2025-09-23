@@ -19,7 +19,7 @@ orderer <- c('Anti-PD-1','Immunotherapy','Chemotherapy','Anti-AR',' ')
 
 lets_go <- 
 base %>% 
- fi(total_patients >= 30, non_responders >= 15, responders >= 15, events >= 8) %>% 
+ fi(total_patients >= 30, non_responders >= 15, responders >= 15, events >= 5) %>% 
  mu(p_fdr_fisher = p.adjust(fisher_pval, method = "fdr"), 
     p_fdr_fisher_by = p.adjust(fisher_pval, method = "BY"),
     p_fdr_surv = p.adjust(surv_pval, method = "fdr"),
@@ -53,6 +53,10 @@ base %>%
      light_highlight ~ "Both Significant / Unadjusted",
      TRUE ~ "Rest"), 
        levels = c("Both Signficant","Fisher Signficant","PFS Signficant", "Both Significant / Unadjusted","Rest")))
+
+dim(lets_go)
+
+lets_go %>% ar(fisher_pval) %>% fi(low_responder)
 
 tmp <- 
 lets_go %>% 
@@ -145,5 +149,7 @@ c("_" = " ",
   "RNACD" = "RNA CD",
   "CD 8" = "CD8", 
   "BASAL CELL CARCINOMA" = "Basal Cell")
+
+share %>% fi(grepl("effector", feature))
 
 saveRDS(share, paste0(SHARE_DIR, "3_ready.rds"))

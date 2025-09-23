@@ -7,9 +7,9 @@ viral_reported <-
 viral %>% 
  fi(reported) %>% 
  se(sampleId, interpretation, integrations) %>% 
- sp(interpretation, integrations) 
-
-viral_reported[is.na(viral_reported)] <- 0
+ sp(interpretation, integrations) %>%
+ mu(across(-sampleId, ~ ifelse(. > 0, 1, 0))) %>%
+ mu(across(everything(), ~ ifelse(is.na(.), 0, .)))
 
 colnames(viral_reported) <- c("sampleId", paste0("viral_", colnames(viral_reported)[-1]))
 

@@ -80,6 +80,8 @@ top_mechanisms %>% su(mean(ct), mean(no_dcb), median(ct), median(no_dcb), min(ct
 print("Summaries of cohort sizes by treatment group")
 top_mechanisms %>% gb(group) %>% su(n(), mean(ct), mean(no_dcb), median(ct), median(no_dcb), min(ct), max(ct))
 
+go %>% se( contains("effector" ))
+
 fwrite(top_mechanisms, paste0(SHARE_DIR, "top_mechanisms.csv"))
 fwrite(go %>% fi(cohortGo %in% top_mechanisms$cohortGo), paste0(SHARE_DIR, "fisher_base.csv"))
 fwrite(go %>% 

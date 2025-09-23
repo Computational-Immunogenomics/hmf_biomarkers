@@ -14,7 +14,6 @@ c("purity",
   "viral", 
   "lilac", 
   "neo", 
-  "neo_pep", 
   "svs", 
   "gie", 
   "fusions_dna", 
@@ -26,16 +25,14 @@ dfs <- list()
 system.time(
 for( i in sources){
   print(i); flush.console()
-  dfs[[i]] <- fread( paste0(i, "_ready.csv"))
+  dfs[[i]] <- fread( paste0(i, "_ready.csv")) %>% mu(sampleId = as.character(sampleId))
 })
 
 ready <- 
  dfs %>% 
  reduce(left_join, by = "sampleId") %>%
- rename_with(~ gsub("[^A-Za-z0-9_]", "_", .x)) %>% 
- se(-contains("perplexity"))
+ rename_with(~ gsub("[^A-Za-z0-9_]", "_", .x))
 
-ready <- 
-ready %>% mutate( across(c(contains("driver"), contains("viral"), contains("hotspot")), ~replace_na(.,0) ))
+ready <- ready %>% mutate( across(c(contains("driver"), contains("viral"), contains("hotspot")), ~replace_na(.,0) ))
 
 fwrite( ready, paste0(SHARE_DIR, "biomarkers_base.csv") )

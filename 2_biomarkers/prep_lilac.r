@@ -28,6 +28,8 @@ lilac_base %>%
  rename_with(~ paste0("hla_cn_", .), .cols = -sampleId) %>% 
  ug()
 
+#head(hla_supertypes_cn)
+
 loh <- 
 lilac_base %>% 
  gb(sampleId, receptor) %>% 
@@ -46,7 +48,7 @@ lilac_base %>%
 
 juntos <- 
 hla_supertypes %>% 
- ij(hla_supertypes_cn, by = "sampleId") %>% 
+#ij(hla_supertypes_cn, by = "sampleId") %>% 
  ij(loh, by = "sampleId") %>% 
  ij(zygosity, by = "sampleId") %>% 
  rename_with(~ paste0("lilac_", .), .cols = -c(sampleId, hla_supertype))
