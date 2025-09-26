@@ -43,14 +43,3 @@ top <- function(data, group_col) {
    summarise(ct := n(), .groups = "drop") %>%
    arrange(desc(ct))
 }
-
-go_theme <- 
-theme_bw() + 
-theme(
-    panel.grid.major = element_blank(),  # Remove major gridlines
-    panel.grid.minor = element_blank(), 
-    plot.title = element_text(hjust = .5, size = 16), 
-    axis.text.x = element_text(angle = 16, hjust = 1), 
-    axis.title.y = element_text(size = 16), 
-    axis.title.x = element_text(size = 16)
-)

@@ -18,4 +18,5 @@ else:
     for i in os.listdir():
         if '.ipynb' in i and 'checkpoint' not in i:
             cmd = 'jupyter nbconvert --to script ' + i
-            os.system(cmd) 
+            os.system(cmd)
+

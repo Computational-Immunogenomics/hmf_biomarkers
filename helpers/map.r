@@ -17,7 +17,6 @@ SHARE_DIR = paste0(I_DIR, "biomarkers/share/")
 
 ### Utility directories ### 
 REF_DIR= paste0(I_DIR, "biomarkers/ref/")
-HELP_DIR="/home/josephusset@vhio.org/biomarkers/helpers/"
 
 ### File path mapper for samples
 get_fp <- function(i, type = "purity"){
